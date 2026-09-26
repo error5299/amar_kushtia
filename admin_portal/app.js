@@ -2728,7 +2728,7 @@ window.loadAppUpdateConfig = async function() {
     releaseTitleEn: 'Amar Kushtia Beta 1.0 is Out!',
     releaseNotesBn: '• কুষ্টিয়া জেলার বাস কাউন্টারের নতুন মোবাইল নম্বর ও তথ্য আপডেট\n• সম্পূর্ণ অ্যাপের ট্রানজিশন ও ইমেজ ক্যাশিং অপ্টিমাইজেশন (জিরো ল্যাগ)\n• সেটিংসে সরাসরি অ্যাপ আপডেট যাচাই ও রিলিজ সিস্টেম যুক্ত',
     releaseNotesEn: '• Added updated bus counter contacts across Kushtia\n• Major UI rendering and startup lag optimizations\n• Integrated live app release management',
-    apkDownloadUrl: '',
+    apkDownloadUrl: 'https://github.com/error5299/amar_kushtia/releases/download/v1.0.0-beta.1/app-release.apk',
     playStoreUrl: '',
     minSupportedBuildNumber: 1,
     channel: 'beta',
