@@ -1537,7 +1537,7 @@
   <script src="js/i18n.js?v=2.6"></script>
   <script src="js/main.js?v=2.6"></script>
 
-  <!-- SupportKori Donation & Support Widget -->
+  <!-- SupportKori Donation & Support Floating Widget -->
   <script
     src="https://www.supportkori.com/widget.js"
     data-id="belayeth923"
@@ -1545,6 +1545,157 @@
     data-color="#10B981"
     data-position="right"
   ></script>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SUPPORT & DONATION AUTO-POPUP & FULL-SCREEN MODAL
+  ══════════════════════════════════════════════════════════ -->
+
+  <!-- 1. Floating Animated Pop-up (Triggers 6s after entry) -->
+  <div id="skAutoPopup" class="fixed bottom-24 right-5 sm:right-6 z-[999990] max-w-sm w-[calc(100%-2.5rem)] bg-[#072417] text-white p-5 rounded-3xl border border-emerald-500/40 shadow-2xl shadow-emerald-950/80 transition-all duration-500 translate-y-12 opacity-0 pointer-events-none backdrop-blur-xl">
+    <div class="relative z-10 space-y-3">
+      <!-- Close Pop-up Button -->
+      <button onclick="closeSkAutoPopup()" class="absolute -top-1.5 -right-1.5 p-1 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-all text-xs" aria-label="Close">
+        <i class="fa-solid fa-xmark w-5 h-5 flex items-center justify-center"></i>
+      </button>
+
+      <!-- Badge & Creator Avatar -->
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 p-0.5 shadow-md shrink-0">
+          <img src="assets/app_icon.png" alt="আমার কুষ্টিয়া" class="w-full h-full object-cover rounded-[14px]">
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs font-black text-white">আমার কুষ্টিয়া প্রজেক্ট</span>
+            <span class="px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold border border-emerald-500/30">উদ্যোগ</span>
+          </div>
+          <p class="text-[11px] text-emerald-300/90 font-medium">কুষ্টিয়ার সকল সেবা সবার জন্য উন্মুক্ত রাখতে</p>
+        </div>
+      </div>
+
+      <!-- Main Message -->
+      <p class="text-xs text-slate-200 leading-relaxed font-normal">
+        ‘আমার কুষ্টিয়া’ সম্পূর্ণ অলাভজনক ও বিজ্ঞাপনমুক্ত ডিজিটাল প্ল্যাটফর্ম। অ্যাপ ও সার্ভার সচল রাখতে আপনার ক্ষুদ্র সহযোগিতাও অপরিসীম।
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2 pt-1">
+        <button onclick="openSkFullScreenModal()" class="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black text-xs shadow-lg shadow-emerald-600/30 transition-all flex items-center justify-center gap-2 active:scale-95">
+          <i class="fa-solid fa-heart text-rose-600 animate-pulse text-sm"></i>
+          <span>সাপোর্ট করুন (Support)</span>
+        </button>
+        <button onclick="closeSkAutoPopup()" class="py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/15 text-slate-300 text-xs font-semibold transition-all">
+          পরে
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Full-Screen Interactive Support Modal (Embeds SupportKori Gateway) -->
+  <div id="skFullScreenModal" class="fixed inset-0 z-[999999] flex items-center justify-center bg-black/80 backdrop-blur-md p-3 sm:p-6 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="relative w-full max-w-xl h-[92vh] max-h-[820px] bg-[#071f14] border border-emerald-500/40 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-scale-up">
+      
+      <!-- Top Modal Header -->
+      <div class="px-5 py-4 border-b border-white/10 bg-[#061910] flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-lg shadow-inner">
+            <i class="fa-solid fa-hand-holding-heart text-emerald-400"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>আমার কুষ্টিয়া — সাপোর্ট ও অনুদান</span>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">bKash / Nagad / Card</span>
+            </h3>
+            <p class="text-[11px] text-slate-400">SupportKori-এর মাধ্যমে নিরাপদ গেটওয়েতে সাপোর্ট করুন</p>
+          </div>
+        </div>
+
+        <button onclick="closeSkFullScreenModal()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center transition-all" aria-label="Close Modal">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <!-- Iframe Body: Loads Full SupportKori Interface for belayeth923 -->
+      <div class="relative flex-1 w-full bg-white overflow-hidden">
+        <div id="skIframeLoader" class="absolute inset-0 flex flex-col items-center justify-center bg-[#071f14] text-white gap-3 z-10">
+          <div class="w-9 h-9 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+          <span class="text-xs text-emerald-300 font-medium">নিরাপদ গেটওয়ে লোড হচ্ছে...</span>
+        </div>
+        <iframe
+          id="skPaymentIframe"
+          src=""
+          data-src="https://supportkori.com/widget/belayeth923"
+          class="w-full h-full border-0"
+          onload="document.getElementById('skIframeLoader').classList.add('hidden')"
+          allow="payment"
+        ></iframe>
+      </div>
+
+      <!-- Bottom Status Bar -->
+      <div class="px-5 py-2.5 bg-[#05160e] border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400 shrink-0">
+        <span class="flex items-center gap-1.5 text-emerald-400">
+          <i class="fa-solid fa-shield-halved text-xs"></i>
+          <span>১০০% নিরাপদ ট্রানজেকশন (SSL Encrypted)</span>
+        </span>
+        <button onclick="closeSkFullScreenModal()" class="text-slate-300 hover:text-white font-semibold">
+          বন্ধ করুন
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 3. Logic: Auto Popup Timer (6 Seconds) & Fullscreen Modal Handlers -->
+  <script>
+    function openSkFullScreenModal() {
+      closeSkAutoPopup();
+      const modal = document.getElementById('skFullScreenModal');
+      const iframe = document.getElementById('skPaymentIframe');
+      if (iframe && !iframe.src) {
+        iframe.src = iframe.getAttribute('data-src') || 'https://supportkori.com/widget/belayeth923';
+      }
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSkFullScreenModal() {
+      const modal = document.getElementById('skFullScreenModal');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      document.body.style.overflow = '';
+    }
+
+    function closeSkAutoPopup() {
+      const popup = document.getElementById('skAutoPopup');
+      if (popup) {
+        popup.classList.add('opacity-0', 'translate-y-12', 'pointer-events-none');
+        sessionStorage.setItem('SK_POPUP_DISMISSED', 'true');
+      }
+    }
+
+    // Automatically trigger pop-up 6 seconds after page load
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const isDismissed = sessionStorage.getItem('SK_POPUP_DISMISSED');
+        const popup = document.getElementById('skAutoPopup');
+        if (!isDismissed && popup) {
+          popup.classList.remove('opacity-0', 'translate-y-12', 'pointer-events-none');
+        }
+      }, 6000); // 6 seconds delay
+    });
+
+    // Close on backdrop click or Escape key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeSkFullScreenModal();
+        closeSkAutoPopup();
+      }
+    });
+
+    document.getElementById('skFullScreenModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'skFullScreenModal') {
+        closeSkFullScreenModal();
+      }
+    });
+  </script>
 </body>
 
 </html>

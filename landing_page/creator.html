@@ -682,5 +682,57 @@
     data-color="#10B981"
     data-position="right"
   ></script>
+
+  <!-- Full-Screen Interactive Support Modal for Creator Page -->
+  <div id="skFullScreenModal" class="fixed inset-0 z-[999999] flex items-center justify-center bg-black/80 backdrop-blur-md p-3 sm:p-6 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="relative w-full max-w-xl h-[92vh] max-h-[820px] bg-[#071f14] border border-emerald-500/40 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-scale-up">
+      <div class="px-5 py-4 border-b border-white/10 bg-[#061910] flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-lg shadow-inner">
+            <i class="fa-solid fa-hand-holding-heart text-emerald-400"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>বেলায়াত হোসেন — সাপোর্ট ও অনুদান</span>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">bKash / Nagad</span>
+            </h3>
+            <p class="text-[11px] text-slate-400">SupportKori-এর মাধ্যমে নিরাপদ গেটওয়েতে সাপোর্ট করুন</p>
+          </div>
+        </div>
+        <button onclick="closeSkFullScreenModal()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center transition-all" aria-label="Close Modal">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+      <div class="relative flex-1 w-full bg-white overflow-hidden">
+        <iframe
+          id="skPaymentIframe"
+          src=""
+          data-src="https://supportkori.com/widget/belayeth923"
+          class="w-full h-full border-0"
+          allow="payment"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openSkFullScreenModal() {
+      const modal = document.getElementById('skFullScreenModal');
+      const iframe = document.getElementById('skPaymentIframe');
+      if (iframe && !iframe.src) {
+        iframe.src = iframe.getAttribute('data-src') || 'https://supportkori.com/widget/belayeth923';
+      }
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeSkFullScreenModal() {
+      const modal = document.getElementById('skFullScreenModal');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      document.body.style.overflow = '';
+    }
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeSkFullScreenModal();
+    });
+  </script>
 </body>
 </html>
