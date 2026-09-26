@@ -8,15 +8,15 @@
   
   [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
   [![Platform](https://img.shields.io/badge/Platform-Android-3DDC84?logo=android&logoColor=white)](https://android.com)
-  [![Version](https://img.shields.io/badge/Version-1.0.0--beta.1-0B5233?style=flat)](https://github.com)
+  [![Version](https://img.shields.io/badge/Version-1.0.0--beta.1-0B5233?style=flat)](https://github.com/error5299/amar_kushtia/releases)
   [![License](https://img.shields.io/badge/License-Proprietary-red)](LICENSE)
-  [![Release](https://img.shields.io/badge/Build-Release--APK-success?logo=github)](https://github.com)
+  [![Release](https://img.shields.io/badge/Build-Release--APK-success?logo=github)](https://github.com/error5299/amar_kushtia/releases)
 
   <p align="center">
     <b>কুষ্টিয়ার সকল জরুরি হেল্পলাইন • রক্তদাতা ও হাসপাতাল • বাস ও ট্রেন সময়সূচি • দর্শনীয় স্থান • প্রশাসনিক দপ্তর</b>
   </p>
 
-  [📲 সর্বশেষ APK ডাউনলোড করুন](https://github.com) • [🌐 ওয়েব অ্যাডমিন পোর্টাল](admin_portal/) • [✨ কী কী নতুন](#-নতুন-ফিচারসমূহ)
+  [📲 সর্বশেষ APK ডাউনলোড করুন](https://github.com/error5299/amar_kushtia/releases/latest) • [🌐 ওয়েব অ্যাডমিন পোর্টাল](admin_portal/) • [✨ কী কী নতুন](#-নতুন-ফিচারসমূহ)
 
 </div>
 
