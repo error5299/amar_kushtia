@@ -1537,7 +1537,39 @@
   <script src="js/i18n.js?v=2.6"></script>
   <script src="js/main.js?v=2.6"></script>
 
-  <!-- SupportKori Donation & Support Floating Widget -->
+  <!-- ══════════════════════════════════════════════════════════
+       SUPPORTKORI OFFICIAL WIDGET — LARGE LIGHT THEME & AUTO-TRIGGER
+  ══════════════════════════════════════════════════════════ -->
+  <style>
+    /* Custom Styling to make SupportKori Widget Large, Light Themed & Responsive */
+    .sk-widget-iframe-container {
+      width: min(580px, 94vw) !important;
+      height: min(740px, 88vh) !important;
+      bottom: 85px !important;
+      right: 20px !important;
+      border-radius: 28px !important;
+      box-shadow: 0 25px 60px -15px rgba(5, 40, 25, 0.3), 0 0 0 1px rgba(16, 185, 129, 0.25) !important;
+      background: #FFFFFF !important;
+      overflow: hidden !important;
+    }
+    .sk-widget-iframe {
+      width: 100% !important;
+      height: 100% !important;
+      border: none !important;
+      border-radius: 28px !important;
+      background: #FFFFFF !important;
+    }
+    .sk-widget-btn {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+      color: #FFFFFF !important;
+      box-shadow: 0 8px 24px -4px rgba(5, 150, 105, 0.45) !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      font-weight: 700 !important;
+      padding: 12px 20px !important;
+    }
+  </style>
+
+  <!-- Official SupportKori Widget Script -->
   <script
     src="https://www.supportkori.com/widget.js"
     data-id="belayeth923"
@@ -1546,120 +1578,20 @@
     data-position="right"
   ></script>
 
-  <!-- ══════════════════════════════════════════════════════════
-       LARGE LIGHT-THEMED SUPPORT & DONATION AUTO-POPUP MODAL
-       (Directly connected to https://www.supportkori.com/belayeth923)
-  ══════════════════════════════════════════════════════════ -->
-
-  <div id="skLargeLightModal" class="fixed inset-0 z-[999999] flex items-center justify-center bg-slate-900/60 backdrop-blur-md p-3 sm:p-6 opacity-0 pointer-events-none transition-all duration-300">
-    <div class="relative w-full max-w-2xl h-[92vh] max-h-[780px] bg-white border border-emerald-100 rounded-[28px] shadow-2xl shadow-emerald-950/20 flex flex-col overflow-hidden animate-scale-up">
-      
-      <!-- Top Modal Header (Clean Light Theme) -->
-      <div class="px-5 sm:px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-emerald-50/70 via-white to-teal-50/70 flex items-center justify-between shrink-0">
-        <div class="flex items-center gap-3.5">
-          <div class="w-11 h-11 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-xl shadow-md shadow-emerald-600/25 shrink-0">
-            <i class="fa-solid fa-hand-holding-heart"></i>
-          </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <h3 class="text-base font-bold text-slate-900">আমার কুষ্টিয়া — সাপোর্ট ও অনুদান</h3>
-              <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold border border-emerald-200">অলাভজনক</span>
-            </div>
-            <p class="text-xs text-slate-500 font-normal">SupportKori-এর মাধ্যমে সরাসরি বিকাশ, নগদ বা কার্ডে সাপোর্ট করুন</p>
-          </div>
-        </div>
-
-        <button onclick="closeSkLargeLightModal()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-all cursor-pointer" aria-label="Close Modal">
-          <i class="fa-solid fa-xmark text-base"></i>
-        </button>
-      </div>
-
-      <!-- Quick Message Banner (Light Aesthetic) -->
-      <div class="px-6 py-2.5 bg-emerald-50/50 border-b border-emerald-100/60 flex items-center justify-between text-xs text-emerald-900 shrink-0">
-        <span class="flex items-center gap-2">
-          <i class="fa-solid fa-circle-info text-emerald-600"></i>
-          <span>অ্যাপ ও ডাটাবেজ সচল রাখতে আপনার ক্ষুদ্র সহযোগিতাও অপরিসীম!</span>
-        </span>
-        <a href="https://www.supportkori.com/belayeth923" target="_blank" rel="noopener" class="text-emerald-700 hover:text-emerald-800 font-bold flex items-center gap-1">
-          <span>নতুন ট্যাবে দেখুন</span>
-          <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-        </a>
-      </div>
-
-      <!-- Iframe Body: Embeds SupportKori Widget / Profile directly in Clean Light View -->
-      <div class="relative flex-1 w-full bg-white overflow-hidden">
-        <div id="skIframeLoader" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-50 text-slate-700 gap-3 z-10 transition-opacity duration-300">
-          <div class="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-          <span class="text-xs font-semibold text-slate-600">SupportKori নিরাপদ গেটওয়ে লোড হচ্ছে...</span>
-        </div>
-        <iframe
-          id="skPaymentIframe"
-          src=""
-          data-src="https://supportkori.com/widget/belayeth923"
-          class="w-full h-full border-0 bg-white"
-          onload="document.getElementById('skIframeLoader').classList.add('hidden')"
-          allow="payment"
-        ></iframe>
-      </div>
-
-      <!-- Bottom Bar (Clean Light Footer) -->
-      <div class="px-6 py-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 shrink-0">
-        <div class="flex items-center gap-3">
-          <span class="flex items-center gap-1.5 text-emerald-700 font-medium">
-            <i class="fa-solid fa-shield-halved text-emerald-600"></i>
-            <span>১০০% নিরাপদ (bKash • Nagad • Cards)</span>
-          </span>
-        </div>
-        <div class="flex items-center gap-2">
-          <button onclick="closeSkLargeLightModal()" class="px-4 py-1.5 rounded-xl bg-slate-200/80 hover:bg-slate-300 text-slate-700 font-semibold transition-all">
-            পরে করবো
-          </button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- 3. Auto Popup Controller Script (6 Seconds Delay) -->
+  <!-- Auto-Open Controller (Triggers large widget popup in 6 seconds) -->
   <script>
-    function openSkLargeLightModal() {
-      const modal = document.getElementById('skLargeLightModal');
-      const iframe = document.getElementById('skPaymentIframe');
-      if (iframe && !iframe.src) {
-        iframe.src = iframe.getAttribute('data-src') || 'https://supportkori.com/widget/belayeth923';
-      }
-      modal.classList.remove('opacity-0', 'pointer-events-none');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeSkLargeLightModal() {
-      const modal = document.getElementById('skLargeLightModal');
-      modal.classList.add('opacity-0', 'pointer-events-none');
-      document.body.style.overflow = '';
-      sessionStorage.setItem('SK_LARGE_MODAL_DISMISSED', 'true');
-    }
-
-    // Automatically trigger large modal 6 seconds after page load
     window.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
-        const isDismissed = sessionStorage.getItem('SK_LARGE_MODAL_DISMISSED');
-        if (!isDismissed) {
-          openSkLargeLightModal();
+        const dismissed = sessionStorage.getItem('SK_WIDGET_AUTO_OPENED');
+        if (!dismissed) {
+          const btn = document.querySelector('.sk-widget-btn');
+          const container = document.querySelector('.sk-widget-iframe-container');
+          if (btn && container && !container.classList.contains('open')) {
+            btn.click();
+            sessionStorage.setItem('SK_WIDGET_AUTO_OPENED', 'true');
+          }
         }
-      }, 6000); // 6 seconds
-    });
-
-    // Close on backdrop click or Escape key
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeSkLargeLightModal();
-      }
-    });
-
-    document.getElementById('skLargeLightModal')?.addEventListener('click', (e) => {
-      if (e.target.id === 'skLargeLightModal') {
-        closeSkLargeLightModal();
-      }
+      }, 6000); // 6 seconds delay
     });
   </script>
 </body>
