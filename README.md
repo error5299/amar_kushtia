@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="assets/images/logo.png" alt="আমার কুষ্টিয়া লোগো" width="110" style="border-radius: 24px;" />
+  <img src="assets/icons/amar_kushtia.png" alt="আমার কুষ্টিয়া লোগো" width="115" style="border-radius: 24px;" />
 
   # 🌿 আমার কুষ্টিয়া (Amar Kushtia)
   
