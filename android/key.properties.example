@@ -1,0 +1,11 @@
+# Keystore release signing configuration for Amar Kushtia
+# DO NOT commit real passwords or key.properties to git!
+# Create a copy named 'key.properties' in this directory.
+#
+# Generate a new keystore with:
+# keytool -genkey -v -keystore upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
+
+storePassword=YOUR_KEYSTORE_PASSWORD
+keyPassword=YOUR_KEY_PASSWORD
+keyAlias=upload
+storeFile=../upload-keystore.jks

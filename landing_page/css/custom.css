@@ -1,0 +1,265 @@
+@import url('https://fonts.cdnfonts.com/css/google-sans');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --primary: #0B5233;
+  --primary-dark: #063822;
+  --primary-light: #10B981;
+  --primary-accent: #059669;
+  --gold: #D97706;
+  --bg-green-soft: #EBF7F1;
+  --card-light: #FFFFFF;
+  --border-light: rgba(16, 185, 129, 0.15);
+  --text-main: #0F172A;
+  --text-muted: #475569;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Soothing Lush Green-Gradient Body Background ── */
+body {
+  font-family: 'Google Sans', 'Plus Jakarta Sans', 'Noto Sans Bengali', system-ui, -apple-system, sans-serif !important;
+  background-color: #EBF7F1;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.22) 0px, transparent 55%),
+    radial-gradient(at 100% 0%, rgba(13, 148, 136, 0.18) 0px, transparent 55%),
+    radial-gradient(at 50% 30%, rgba(52, 211, 153, 0.14) 0px, transparent 55%),
+    radial-gradient(at 0% 65%, rgba(5, 150, 105, 0.16) 0px, transparent 55%),
+    radial-gradient(at 100% 75%, rgba(16, 185, 129, 0.20) 0px, transparent 55%),
+    radial-gradient(at 50% 100%, rgba(4, 120, 87, 0.15) 0px, transparent 55%);
+  background-attachment: fixed;
+  background-size: cover;
+  color: #0F172A;
+  overflow-x: hidden;
+}
+
+button, input, select, textarea, p, h1, h2, h3, h4, h5, h6, a, span, label, div {
+  font-family: 'Google Sans', 'Plus Jakarta Sans', 'Noto Sans Bengali', system-ui, -apple-system, sans-serif;
+}
+
+/* ── Protect FontAwesome Icon Fonts from being overridden ── */
+.fa, .fa-solid, .fa-regular, .fa-brands, [class*="fa-"] {
+  font-family: "Font Awesome 6 Free" !important;
+}
+.fa-brands, [class*="fa-brands"] {
+  font-family: "Font Awesome 6 Brands" !important;
+}
+.fa-solid, [class*="fa-solid"] {
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 900 !important;
+}
+.fa-regular, [class*="fa-regular"] {
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 400 !important;
+}
+[class*="fa-"]::before, [class*="fa-"]::after {
+  font-family: inherit !important;
+}
+
+.stat-number {
+  font-family: 'Google Sans', 'Plus Jakarta Sans', 'Noto Sans Bengali', sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em;
+}
+
+.font-googlesans {
+  font-family: 'Google Sans', 'Plus Jakarta Sans', 'Noto Sans Bengali', sans-serif;
+}
+
+/* ── 3D Perspective & Mockup Styles ── */
+.perspective-1000 {
+  perspective: 1200px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.phone-mockup-wrapper {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.phone-device {
+  width: 310px;
+  height: 640px;
+  background: #0B0F17;
+  border-radius: 46px;
+  padding: 11px;
+  position: relative;
+  box-shadow: 
+    0 0 0 2.5px rgba(16, 185, 129, 0.3),
+    0 25px 50px -12px rgba(11, 82, 51, 0.30),
+    0 40px 90px -15px rgba(15, 23, 42, 0.32);
+  transform-style: preserve-3d;
+}
+
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  background: #F4F6F5;
+  border-radius: 36px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Dynamic Glare Effect on Mockup */
+.phone-glare {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.05) 40%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+  border-radius: 36px;
+  z-index: 40;
+}
+
+/* Dynamic Island / Camera Notch */
+.phone-island {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95px;
+  height: 22px;
+  background: #000;
+  border-radius: 20px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+}
+
+.phone-lens {
+  width: 8px;
+  height: 8px;
+  background: #111827;
+  border: 1.5px solid #1E293B;
+  border-radius: 50%;
+}
+
+/* Floating 3D Badges */
+.floating-badge {
+  position: absolute;
+  z-index: 45;
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 16px;
+  padding: 10px 14px;
+  box-shadow: 0 20px 35px -8px rgba(11, 82, 51, 0.16), 0 0 15px rgba(16, 185, 129, 0.15);
+  animation: floatAnim 4s ease-in-out infinite alternate;
+}
+
+.floating-badge-1 {
+  top: 15%;
+  left: -48px;
+  animation-delay: 0s;
+}
+
+.floating-badge-2 {
+  bottom: 24%;
+  right: -52px;
+  animation-delay: 1.5s;
+}
+
+.floating-badge-3 {
+  bottom: 7%;
+  left: -38px;
+  animation-delay: 3s;
+}
+
+@keyframes floatAnim {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-9px) rotate(1deg);
+  }
+}
+
+/* Screen Switcher Content */
+.app-screen-content {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.app-screen-content.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* Custom Scrollbar inside Phone Screen */
+.phone-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.phone-scroll::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+
+/* Ambient Glow Orbs for Soft Green Theme */
+.orb-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+}
+.orb-primary {
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.22) 0%, rgba(235, 247, 241, 0) 70%);
+}
+.orb-secondary {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(13, 148, 136, 0.18) 0%, rgba(235, 247, 241, 0) 70%);
+}
+.orb-gold {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, rgba(235, 247, 241, 0) 70%);
+}
+
+/* Feature Cards & Animations */
+.feature-card {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 30px -10px rgba(11, 82, 51, 0.16);
+}
+
+/* Gallery Screen Card Hover Effect */
+.screen-card-zoom {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.screen-card-zoom:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 30px -8px rgba(11, 82, 51, 0.18);
+}
+.screen-card-zoom:hover .zoom-overlay {
+  opacity: 1;
+}
+
+/* Glassmorphism Classes */
+.glass-header {
+  background: rgba(235, 247, 241, 0.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  box-shadow: 0 10px 25px -5px rgba(11, 82, 51, 0.08);
+}

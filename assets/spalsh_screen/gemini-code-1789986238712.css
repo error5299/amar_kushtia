@@ -1,0 +1,68 @@
+/* পুরো স্ক্রিনের জন্য মৌলিক স্টাইল */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* স্ক্রলবার বন্ধ করার জন্য */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8fff9; /* হালকা অফ-হোয়াইট গ্রিন ব্যাকগ্রাউন্ড - লোগোর রঙের সাথে মিলিয়ে */
+    font-family: Arial, sans-serif;
+}
+
+/* স্প্ল্যাশ স্ক্রিনের কন্টেইনার */
+.splash-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* লোগোকে সুন্দরভাবে দেখানোর জন্য */
+.logo-wrapper {
+    margin-bottom: 50px; /* লোগো এবং লোডারের মধ্যে দূরত্ব */
+    opacity: 0; /* শুরুতে অদৃশ্য থাকবে */
+    transform: scale(0.8); /* শুরুতে একটু ছোট থাকবে */
+    animation: fadeInLogo 1s ease-out forwards; /* ১ সেকেন্ডের এনিমেশন */
+}
+
+/* লোগো ফাইলের স্টাইল */
+.main-logo {
+    max-width: 300px; /* লোগোর সর্বোচ্চ প্রস্থ (আপনার প্রয়োজন অনুযায়ী পরিবর্তন করুন) */
+    height: auto; /* উচ্চতা অনুপাত অনুযায়ী ঠিক থাকবে */
+}
+
+/* লোডার (Loading spinner) */
+.loader {
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(13, 107, 58, 0.1); /* হালকা লোগোর রঙ */
+    border-top: 3px solid #0d6b3a; /* গাঢ় লোগোর রঙ */
+    border-radius: 50%;
+    opacity: 0; /* শুরুতে অদৃশ্য */
+    animation: spin 1s linear infinite, fadeInLoader 0.5s ease-out 1.5s forwards; /* ১.৫ সেকেন্ড পর প্রদর্শিত হবে */
+}
+
+/* লোগো এনিমেশন: ধীরে ধীরে বড় ও উজ্জ্বল হবে */
+@keyframes fadeInLogo {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* লোডার ঘুরার এনিমেশন */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* লোডার ধীরে ধীরে প্রদর্শিত হওয়ার এনিমেশন */
+@keyframes fadeInLoader {
+    to {
+        opacity: 1;
+    }
+}

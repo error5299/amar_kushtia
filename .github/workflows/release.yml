@@ -1,0 +1,68 @@
+name: Build & Release Android APK
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version_tag:
+        description: 'Release version tag (e.g. v1.0.0-beta.1)'
+        required: true
+        default: 'v1.0.0-beta.1'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build & Publish Release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Verify Code Quality & Tests
+        run: |
+          flutter analyze
+          flutter test test/widget_test.dart
+
+      - name: Build Android Release APK
+        run: flutter build apk --release
+
+      - name: Create GitHub Release & Upload APK
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "আমার কুষ্টিয়া ${{ github.ref_name || inputs.version_tag }}"
+          body: |
+            ## আমার কুষ্টিয়া (Amar Kushtia) - নতুন রিলিজ
+            
+            ### 🚀 কী কী নতুন:
+            - কুষ্টিয়া জেলার বাস কাউন্টারের নতুন মোবাইল নম্বর ও তথ্য আপডেট
+            - সম্পূর্ণ অ্যাপের ট্রানজিশন ও ইমেজ ক্যাশিং অপ্টিমাইজেশন (জিরো ল্যাগ)
+            - সেটিংসে সরাসরি অ্যাপ আপডেট যাচাই ও রিলিজ সিস্টেম যুক্ত
+            - স্বয়ংক্রিয় ইন-অ্যাপ ডাউনলোড ও ইনস্টলেশন সাপোর্ট
+            
+            ### 📲 ইনস্টলেশন:
+            নিচের `app-release.apk` ফাইলটি ডাউনলোড করে আপনার অ্যান্ড্রয়েড ডিভাইসে সরাসরি ইনস্টল করুন।
+          files: build/app/outputs/flutter-apk/app-release.apk
+          draft: false
+          prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,35 @@
+{
+    "name": "Amar Kushtia",
+    "short_name": "Amar Kushtia",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#13542e",
+    "theme_color": "#13542e",
+    "description": "কুষ্টিয়া জেলা তথ্য ও সার্বক্ষণিক নাগরিক সেবা পোর্টাল",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}

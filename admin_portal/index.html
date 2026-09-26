@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amar Kushtia — অ্যাডমিন পোর্টাল (CMS)</title>
+  
+  <!-- Google Fonts: Hind Siliguri & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase v10 Compat SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <i class="fas fa-landmark" style="color: var(--primary); font-size: 22px;"></i>
+      </div>
+      <div class="sidebar-title">
+        <h1>Amar Kushtia</h1>
+        <span>অ্যাডমিন ম্যানেজমেন্ট পোর্টাল</span>
+      </div>
+    </div>
+
+    <ul class="sidebar-menu">
+      <li class="menu-category">প্রধান ড্যাশবোর্ড</li>
+      <li>
+        <a class="sidebar-item active" data-tab="dashboard" onclick="switchTab('dashboard')">
+          <i class="fas fa-chart-pie"></i>
+          <span>সারসংক্ষেপ ও ওভারভিউ</span>
+        </a>
+      </li>
+
+      <li class="menu-category">তথ্য ও সেবা ব্যবস্থাপনা</li>
+      <li>
+        <a class="sidebar-item" data-tab="categories" onclick="switchTab('categories')">
+          <i class="fas fa-th-large"></i>
+          <span>সেবা ও বিভাগসমূহ (Divisions)</span>
+          <span class="sidebar-badge" id="categories-count-badge">০</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-item" data-tab="records" onclick="switchTab('records')">
+          <i class="fas fa-database"></i>
+          <span>সকল তথ্য ও রেকর্ড</span>
+          <span class="sidebar-badge" id="records-count-badge">০</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-item" data-tab="healthcare" onclick="switchTab('healthcare')">
+          <i class="fas fa-hospital"></i>
+          <span>হাসপাতালের বেড ও ফি</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-item" data-tab="surgeries" onclick="switchTab('surgeries')">
+          <i class="fas fa-procedures"></i>
+          <span>সার্জারি শিডিউল</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-item" data-tab="transport" onclick="switchTab('transport')">
+          <i class="fas fa-train"></i>
+          <span>ট্রেন ও পরিবহন শিডিউল</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-item" data-tab="iu_halls" onclick="switchTab('iu_halls')">
+          <i class="fas fa-university"></i>
+          <span>ইবি আবাসিক হল</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-item" data-tab="hotlines" onclick="switchTab('hotlines')">
+          <i class="fas fa-phone-volume"></i>
+          <span>জাতীয় ও জরুরি হটলাইন</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-item" data-tab="travel_guide" onclick="switchTab('travel_guide')">
+          <i class="fas fa-route"></i>
+          <span>ভ্রমণ গাইড (Travel Guide CMS)</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-item" data-tab="notices" onclick="switchTab('notices')">
+          <i class="fas fa-bullhorn"></i>
+          <span>ব্যানার নোটিশ ও ঘোষণা</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-item" data-tab="notifications" onclick="switchTab('notifications')">
+          <i class="fas fa-bell"></i>
+          <span>নোটিফিকেশন পাঠান (Push Alerts)</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-item" data-tab="users" onclick="switchTab('users')">
+          <i class="fas fa-users"></i>
+          <span>অ্যাপ ব্যবহারকারী ও নাগরিক (Users)</span>
+        </a>
+      </li>
+
+      <li class="menu-category">সিস্টেম ও কনফিগারেশন</li>
+      <li>
+        <a class="sidebar-item" data-tab="app_updates" onclick="switchTab('app_updates')">
+          <i class="fas fa-rocket"></i>
+          <span>অ্যাপ রিলিজ ও আপডেট (Updates)</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-item" data-tab="settings" onclick="switchTab('settings')">
+          <i class="fas fa-cog"></i>
+          <span>ফায়ারবেজ সেটিংস</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-item" data-tab="seed" onclick="switchTab('seed')">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <span>ডেটাবেজ সিড (Initial Seed)</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="user-profile">
+        <div class="user-avatar" id="admin-user-avatar">A</div>
+        <div class="user-info">
+          <div class="user-name" id="admin-user-email">admin@amarkushtia.bd</div>
+          <div class="user-role">সিস্টেম অ্যাডমিনিস্ট্রেটর</div>
+        </div>
+        <button class="logout-btn" id="logout-btn" title="লগআউট করুন">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Wrapper -->
+  <div class="main-wrapper">
+    
+    <!-- Top Navbar -->
+    <header class="top-navbar">
+      <div class="nav-left">
+        <button class="toggle-sidebar-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="nav-title">
+          <h2 id="current-page-title">সারসংক্ষেপ ও পরিসংখ্যান</h2>
+          <p>কুষ্টিয়া জেলা তথ্য ও নাগরিক সেবা ডাটাবেজ কন্ট্রোল প্যানেল</p>
+        </div>
+      </div>
+      <div class="nav-right">
+        <div class="status-chip disconnected" id="firebase-status-chip">
+          <div class="status-dot"></div>
+          <span id="firebase-status-text">যাচাই করা হচ্ছে...</span>
+        </div>
+        <a href="../" target="_blank" class="btn btn-secondary btn-sm" title="নাগরিক অ্যাপ খুলুন">
+          <i class="fas fa-external-link-alt"></i>
+          <span>অ্যাপ দেখুন</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="content-container">
+
+      <!-- 1. Dashboard View -->
+      <section class="view-tab active" id="view-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon green"><i class="fas fa-list-check"></i></div>
+            <div class="stat-details">
+              <h3 id="stat-total-records">০</h3>
+              <p>মোট সংরক্ষিত রেকর্ড</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon amber"><i class="fas fa-eye"></i></div>
+            <div class="stat-details">
+              <h3 id="stat-active-records">০</h3>
+              <p>নাগরিক অ্যাপে সক্রিয়</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon blue"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="stat-details">
+              <h3 id="stat-upazilas">৬</h3>
+              <p>উপজেলা কভারেজ</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon purple"><i class="fas fa-tags"></i></div>
+            <div class="stat-details">
+              <h3 id="stat-categories">৭</h3>
+              <p>সেবা ক্যাটাগরি</p>
+            </div>
+          </div>
+          <div class="stat-card" style="cursor: pointer;" onclick="switchTab('users')">
+            <div class="stat-icon" style="background: rgba(16, 185, 129, 0.15); color: #059669;"><i class="fas fa-users"></i></div>
+            <div class="stat-details">
+              <h3 id="stat-total-users">০</h3>
+              <p>নিবন্ধিত অ্যাপ নাগরিক / ইউজার</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-bolt" style="color: var(--accent);"></i>
+              <span>দ্রুত কার্যপ্রণালী (Quick Actions)</span>
+            </div>
+          </div>
+          <div style="padding: 24px; display: flex; gap: 16px; flex-wrap: wrap;">
+            <button class="btn btn-primary" onclick="switchTab('records'); openAddRecordModal();">
+              <i class="fas fa-plus-circle"></i>
+              <span>নতুন রেকর্ড যুক্ত করুন</span>
+            </button>
+            <button class="btn btn-secondary" onclick="switchTab('records')">
+              <i class="fas fa-search"></i>
+              <span>রেকর্ড খুঁজুন ও সম্পাদনা করুন</span>
+            </button>
+            <button class="btn btn-secondary" onclick="switchTab('travel_guide'); openAddLocalRouteModal();">
+              <i class="fas fa-route"></i>
+              <span>নতুন বাস রুট যোগ করুন</span>
+            </button>
+            <button class="btn btn-secondary" onclick="switchTab('notifications')">
+              <i class="fas fa-paper-plane"></i>
+              <span>নাগরিকদের নোটিফিকেশন পাঠান</span>
+            </button>
+            <button class="btn btn-secondary" onclick="switchTab('seed')">
+              <i class="fas fa-database"></i>
+              <span>সব ক্যানোনিকাল ডাটা সিড করুন</span>
+            </button>
+            <button class="btn btn-secondary" onclick="switchTab('categories'); openAddCategoryModal();">
+              <i class="fas fa-plus-circle"></i>
+              <span>নতুন সেবা/বিভাগ যুক্ত করুন</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 1B. Categories / Divisions Management View -->
+      <section class="view-tab" id="view-categories">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-th-large" style="color: var(--primary);"></i>
+              <span>সেবা ও বিভাগসমূহ (Services &amp; Divisions)</span>
+            </div>
+            <div class="panel-actions">
+              <button class="btn btn-primary btn-sm" onclick="openAddCategoryModal()">
+                <i class="fas fa-plus"></i>
+                <span>নতুন বিভাগ যোগ করুন</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Search Bar -->
+          <div style="padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; flex-wrap: wrap; background-color: #fafafa;">
+            <div class="search-input-wrapper">
+              <i class="fas fa-search"></i>
+              <input type="text" class="search-input" id="categories-search" placeholder="বিভাগের নাম বা আইডি দিয়ে খুঁজুন..." oninput="renderCategoriesTable()">
+            </div>
+            <div style="margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted);">
+              <i class="fas fa-info-circle"></i>
+              <span>মোট <strong id="cat-total-count">০</strong>টি বিভাগ সংরক্ষিত আছে। সেবা যোগ, সম্পাদনা বা নিষ্ক্রিয় করতে পারবেন।</span>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div style="overflow-x: auto;">
+            <table class="data-table" style="min-width: 900px;">
+              <thead>
+                <tr>
+                  <th style="width: 56px;">আইকন</th>
+                  <th style="width: 130px;">বিভাগ আইডি</th>
+                  <th>বাংলা নাম</th>
+                  <th>ইংরেজি নাম</th>
+                  <th>বিবরণ</th>
+                  <th style="width: 70px;">ক্রম</th>
+                  <th style="width: 130px;">স্ট্যাটাস</th>
+                  <th style="width: 110px;">কার্যপ্রণালী</th>
+                </tr>
+              </thead>
+              <tbody id="categories-table-body">
+                <tr>
+                  <td colspan="8" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 24px; margin-bottom: 8px; display: block;"></i>
+                    ডেটা লোড হচ্ছে...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Info Box -->
+        <div class="panel" style="margin-top: 16px;">
+          <div style="padding: 20px 24px; display: flex; gap: 16px; align-items: flex-start;">
+            <div style="width: 40px; height: 40px; min-width: 40px; border-radius: 10px; background: #E0F2FE; color: #0284C7; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <div>
+              <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px;">বিভাগ পরিচালনা নির্দেশিকা</div>
+              <ul style="margin: 0; padding-left: 18px; font-size: 12px; color: var(--text-muted); line-height: 1.8;">
+                <li>নতুন বিভাগ যোগ করলে সেটি মোবাইল অ্যাপের "সকল সেবা" স্ক্রিনে স্বয়ংক্রিয়ভাবে দেখাবে।</li>
+                <li>বিভাগ নিষ্ক্রিয় (Inactive) করলে অ্যাপে প্রদর্শিত হবে না, কিন্তু ডেটাবেজ থেকে মুছবে না।</li>
+                <li>বিভাগ মুছলে সংশ্লিষ্ট রেকর্ডগুলো "অন্যান্য" বিভাগে চলে যাবে।</li>
+                <li>আইকন নামের জন্য Font Awesome 5 আইকন নাম ব্যবহার করুন (উদা: hospital, ambulance, school)।</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Master Records View -->
+      <section class="view-tab" id="view-records">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-folder-open" style="color: var(--primary);"></i>
+              <span>জেলা তথ্য ও সেবা তালিকা</span>
+            </div>
+            <div class="panel-actions">
+              <button class="btn btn-primary btn-sm" onclick="openAddRecordModal()">
+                <i class="fas fa-plus"></i>
+                <span>নতুন তথ্য যুক্ত করুন</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Filter & Search Bar -->
+          <div style="padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; flex-wrap: wrap; background-color: #fafafa;">
+            <div class="search-input-wrapper">
+              <i class="fas fa-search"></i>
+              <input type="text" class="search-input" id="records-search" placeholder="শিরোনাম বা আইডি দিয়ে খুঁজুন..." oninput="renderRecordsTable()">
+            </div>
+
+            <select class="select-input" id="records-filter-upazila" onchange="renderRecordsTable()">
+              <option value="all">সকল উপজেলা</option>
+              <option value="kushtia_sadar">কুষ্টিয়া সদর</option>
+              <option value="kumarkhali">কুমারখালী</option>
+              <option value="bheramara">ভেড়ামারা</option>
+              <option value="mirpur">মিরপুর</option>
+              <option value="daulatpur">দৌলতপুর</option>
+              <option value="khoksa">খোকসা</option>
+            </select>
+
+            <select class="select-input" id="records-filter-category" onchange="renderRecordsTable()">
+              <option value="all">সকল ক্যাটাগরি</option>
+              <option value="emergency">জরুরি সেবা</option>
+              <option value="healthcare">স্বাস্থ্যসেবা</option>
+              <option value="tourism">পর্যটন ও ঐতিহ্য</option>
+              <option value="education">শিক্ষা প্রতিষ্ঠান</option>
+              <option value="transport">পরিবহন ও যোগাযোগ</option>
+              <option value="agriculture_business">কৃষি ও বাণিজ্য</option>
+              <option value="public_services">সরকারি দপ্তর ও সেবা</option>
+            </select>
+          </div>
+
+          <!-- Table -->
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width: 110px;">আইডি</th>
+                  <th>শিরোনাম (Title)</th>
+                  <th>ক্যাটাগরি</th>
+                  <th>উপজেলা</th>
+                  <th>যোগাযোগ</th>
+                  <th>স্ট্যাটাস</th>
+                  <th style="text-align: right; width: 130px;">অ্যাকশন</th>
+                </tr>
+              </thead>
+              <tbody id="records-table-body">
+                <tr>
+                  <td colspan="7" style="text-align: center; padding: 30px;">রেকর্ড লোড হচ্ছে...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+       <!-- 2B. Categories / Divisions Management View -->
+       <section class="view-tab" id="view-categories">
+         <div class="panel">
+           <div class="panel-header">
+             <div class="panel-title">
+               <i class="fas fa-th-large" style="color: var(--primary);"></i>
+               <span>কুষ্টিয়া জেলা সেবা ও বিভাগসমূহ (Services & Divisions)</span>
+             </div>
+             <div class="panel-actions">
+               <button class="btn btn-primary btn-sm" onclick="openAddCategoryModal()">
+                 <i class="fas fa-plus"></i>
+                 <span>+ নতুন বিভাগ / সেবা যোগ করুন</span>
+               </button>
+             </div>
+           </div>
+
+           <div style="padding: 12px 24px; background: #fafafa; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+             <div style="font-size: 13px; color: var(--text-muted);">
+               <i class="fas fa-info-circle" style="color: var(--primary); margin-right: 6px;"></i>
+               এখানে কোনো নতুন সেবা/বিভাগ তৈরি, এডিট বা রিমুভ করলে তা নাগরিক মোবাইল অ্যাপে সরাসরি প্রতিফলিত হবে।
+             </div>
+             <div class="search-input-wrapper" style="max-width: 260px;">
+               <i class="fas fa-search"></i>
+               <input type="text" class="search-input" id="categories-search" placeholder="বিভাগ খুঁজুন..." oninput="renderCategoriesTable()">
+             </div>
+           </div>
+
+           <div class="table-responsive">
+             <table class="data-table">
+               <thead>
+                 <tr>
+                   <th style="width: 70px;">আইকন</th>
+                   <th style="width: 150px;">আইডি (Slug)</th>
+                   <th>বিভাগের নাম (বাংলা)</th>
+                   <th>Name (English)</th>
+                   <th>সংক্ষিপ্ত বিবরণ (Subtitle)</th>
+                   <th style="width: 80px;">ক্রম</th>
+                   <th style="width: 110px;">স্ট্যাটাস</th>
+                   <th style="text-align: right; width: 130px;">অ্যাকশন</th>
+                 </tr>
+               </thead>
+               <tbody id="categories-table-body">
+                 <tr>
+                   <td colspan="8" style="text-align: center; padding: 30px;">বিভাগ লোড হচ্ছে...</td>
+                 </tr>
+               </tbody>
+             </table>
+           </div>
+         </div>
+       </section>
+
+      <!-- 3. Healthcare Bed Fees View -->
+      <section class="view-tab" id="view-healthcare">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-bed" style="color: var(--primary);"></i>
+              <span>হাসপাতালের বেড ও ফি ট্যারিফ</span>
+            </div>
+            <div class="panel-actions">
+              <button class="btn btn-primary btn-sm" onclick="openAddHealthcareModal()">
+                <i class="fas fa-plus"></i>
+                <span>নতুন বেড/ফি যোগ করুন</span>
+              </button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>হাসপাতাল</th>
+                  <th>বেড বা সেবার ধরন</th>
+                  <th>সরকারি ফি (টাকা)</th>
+                  <th>মন্তব্য / নোট</th>
+                  <th style="text-align: right; width: 110px;">অ্যাকশন</th>
+                </tr>
+              </thead>
+              <tbody id="healthcare-table-body">
+                <tr><td colspan="5" style="text-align: center; padding: 24px;">লোড হচ্ছে...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Surgeries View -->
+      <section class="view-tab" id="view-surgeries">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-heartbeat" style="color: var(--primary);"></i>
+              <span>কুষ্টিয়া ২৫০ শয্যা জেনারেল হাসপাতাল — সার্জারি শিডিউল</span>
+            </div>
+            <div class="panel-actions">
+              <button class="btn btn-primary btn-sm" onclick="openAddSurgeryModal()">
+                <i class="fas fa-plus"></i>
+                <span>নতুন সার্জারি শিডিউল যোগ করুন</span>
+              </button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>বিভাগ</th>
+                  <th>সার্জারির ধরন</th>
+                  <th>অপারেশন দিবস (শিডিউল)</th>
+                  <th>ওটি / ওয়ার্ড</th>
+                  <th style="text-align: right; width: 110px;">অ্যাকশন</th>
+                </tr>
+              </thead>
+              <tbody id="surgeries-table-body">
+                <tr><td colspan="5" style="text-align: center; padding: 24px;">লোড হচ্ছে...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Transport View -->
+      <section class="view-tab" id="view-transport">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-subway" style="color: var(--primary);"></i>
+              <span>আন্তঃনগর ট্রেন ও সময়সূচী</span>
+            </div>
+            <div class="panel-actions">
+              <button class="btn btn-primary btn-sm" onclick="openAddTransportModal()">
+                <i class="fas fa-plus"></i>
+                <span>নতুন ট্রেন শিডিউল যোগ করুন</span>
+              </button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ট্রেন নং</th>
+                  <th>ট্রেনের নাম</th>
+                  <th>রুট ও সংযোগ স্টেশন</th>
+                  <th>সাপ্তাহিক বন্ধের দিন</th>
+                  <th style="text-align: right; width: 110px;">অ্যাকশন</th>
+                </tr>
+              </thead>
+              <tbody id="transport-table-body">
+                <tr><td colspan="5" style="text-align: center; padding: 24px;">লোড হচ্ছে...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. IU Halls View -->
+      <section class="view-tab" id="view-iu_halls">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-building" style="color: var(--primary);"></i>
+              <span>ইসলামী বিশ্ববিদ্যালয় আবাসিক হলসমূহ</span>
+            </div>
+            <div class="panel-actions">
+              <button class="btn btn-primary btn-sm" onclick="openAddIUHallModal()">
+                <i class="fas fa-plus"></i>
+                <span>নতুন হল যোগ করুন</span>
+              </button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>হলের নাম</th>
+                  <th>শিক্ষার্থী ধরন</th>
+                  <th>প্রভোস্ট</th>
+                  <th>যোগাযোগ</th>
+                  <th style="text-align: right; width: 110px;">অ্যাকশন</th>
+                </tr>
+              </thead>
+              <tbody id="iu-halls-table-body">
+                <tr><td colspan="5" style="text-align: center; padding: 24px;">লোড হচ্ছে...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. National Hotlines View -->
+      <section class="view-tab" id="view-hotlines">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-phone-alt" style="color: var(--primary);"></i>
+              <span>জাতীয় ও জরুরি হটলাইনসমূহ</span>
+            </div>
+            <div class="panel-actions">
+              <button class="btn btn-primary btn-sm" onclick="openAddHotlineModal()">
+                <i class="fas fa-plus"></i>
+                <span>নতুন হটলাইন যোগ করুন</span>
+              </button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>হটলাইন নম্বর</th>
+                  <th>শিরোনাম (বাংলা)</th>
+                  <th>শিরোনাম (English)</th>
+                  <th>বিবরণ ও সেবা</th>
+                  <th style="text-align: right; width: 110px;">অ্যাকশন</th>
+                </tr>
+              </thead>
+              <tbody id="hotlines-table-body">
+                <tr><td colspan="5" style="text-align: center; padding: 24px;">লোড হচ্ছে...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7B. Travel Guide CMS View -->
+      <section class="view-tab" id="view-travel_guide">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-route" style="color: var(--primary);"></i>
+              <span>ভ্রমণ গাইড ব্যবস্থাপনা (Travel Guide CMS)</span>
+            </div>
+            <div class="panel-actions">
+              <button class="btn btn-secondary btn-sm" onclick="switchTravelGuideSubtab('routes')">
+                <i class="fas fa-bus"></i> লোকাল বাস রুট
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="switchTravelGuideSubtab('destinations')">
+                <i class="fas fa-map-marker-alt"></i> গন্তব্যসমূহ
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="switchTravelGuideSubtab('operators')">
+                <i class="fas fa-building"></i> দূরপাল্লার বাস অপারেটর
+              </button>
+            </div>
+          </div>
+
+          <!-- Subtab 1: Local Bus Routes -->
+          <div id="tg-subtab-routes" class="tg-subtab-content" style="padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h4 style="font-size: 15px; font-weight: 700; color: var(--text-main);">
+                <i class="fas fa-bus-alt" style="color: var(--primary); margin-right: 6px;"></i>লোকাল বাস রুট, স্টপ ও ভাড়ার তালিকা
+              </h4>
+              <button class="btn btn-primary btn-sm" onclick="openAddLocalRouteModal()">
+                <i class="fas fa-plus"></i> নতুন বাস রুট যোগ করুন
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>রুট আইডি</th>
+                    <th>রুটের নাম (বাংলা / English)</th>
+                    <th>উৎস ➔ গন্তব্য</th>
+                    <th>মোট স্টপ</th>
+                    <th>স্ট্যাটাস</th>
+                    <th style="text-align: right; width: 130px;">অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody id="tg-routes-table-body">
+                  <tr><td colspan="6" style="text-align: center; padding: 24px;">লোড হচ্ছে...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Subtab 2: Travel Destinations -->
+          <div id="tg-subtab-destinations" class="tg-subtab-content" style="display: none; padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h4 style="font-size: 15px; font-weight: 700; color: var(--text-main);">
+                <i class="fas fa-city" style="color: var(--primary); margin-right: 6px;"></i>কুষ্টিয়া থেকে দূরপাল্লার গন্তব্যসমূহ
+              </h4>
+              <button class="btn btn-primary btn-sm" onclick="openAddDestinationModal()">
+                <i class="fas fa-plus"></i> নতুন গন্তব্য যোগ করুন
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>গন্তব্য আইডি</th>
+                    <th>গন্তব্য (বাংলা / English)</th>
+                    <th>বিভাগ</th>
+                    <th>ক্রম</th>
+                    <th style="text-align: right; width: 110px;">অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody id="tg-destinations-table-body">
+                  <tr><td colspan="5" style="text-align: center; padding: 24px;">লোড হচ্ছে...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Subtab 3: Bus Operators & Counters -->
+          <div id="tg-subtab-operators" class="tg-subtab-content" style="display: none; padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h4 style="font-size: 15px; font-weight: 700; color: var(--text-main);">
+                <i class="fas fa-bus" style="color: var(--primary); margin-right: 6px;"></i>দূরপাল্লার বাস কোম্পানি ও কুষ্টিয়ার কাউন্টারসমূহ
+              </h4>
+              <button class="btn btn-primary btn-sm" onclick="openAddOperatorModal()">
+                <i class="fas fa-plus"></i> নতুন বাস অপারেটর যোগ করুন
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>অপারেটরের নাম</th>
+                    <th>বিবরণ ও ওয়েবসাইট</th>
+                    <th>কাউন্টার সংখ্যা</th>
+                    <th>গন্তব্যসমূহ</th>
+                    <th style="text-align: right; width: 110px;">অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody id="tg-operators-table-body">
+                  <tr><td colspan="5" style="text-align: center; padding: 24px;">লোড হচ্ছে...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7C. Push Notification Broadcaster View -->
+      <section class="view-tab" id="view-notifications">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-bullhorn" style="color: #d97706;"></i>
+              <span>জরুরি ব্রডকাস্ট ও পুশ নোটিফিকেশন প্রেরণ</span>
+            </div>
+          </div>
+          <div style="padding: 24px; max-width: 800px;">
+            <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+              এই প্যানেল থেকে পাঠানো নোটিফিকেশন ফায়ারস্টোর ক্লাউডে সংরক্ষিত হবে এবং সকল "আমার কুষ্টিয়া" মোবাইল ব্যবহারকারীর ইনবক্স ও হোম স্ক্রিনে তাৎক্ষণিকভাবে অ্যালার্ট হিসেবে পৌঁছে যাবে।
+            </p>
+
+            <form id="broadcast-notification-form">
+              <div class="form-grid">
+                <div class="form-group" style="grid-column: span 2;">
+                  <label class="form-label">নোটিফিকেশনের ধরন (Category) <span>*</span></label>
+                  <select class="form-control" id="notif-type" required>
+                    <option value="general">📢 সাধারণ নোটিশ (General)</option>
+                    <option value="emergency">🚨 জরুরি সতর্কতা (Emergency Alert)</option>
+                    <option value="travel">🚌 ভ্রমণ ও বাস আপডেট (Travel Guide)</option>
+                    <option value="healthcare">🏥 স্বাস্থ্যসেবা বুলেটিন (Healthcare)</option>
+                    <option value="contentUpdate">🔄 তথ্য হালনাগাদ (Content Update)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">শিরোনাম (বাংলা) <span>*</span></label>
+                  <input type="text" class="form-control" id="notif-titleBn" required placeholder="উদা: কুষ্টিয়া-ঢাকা রুটে নতুন বাস সার্ভিস চালু">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">শিরোনাম (English)</label>
+                  <input type="text" class="form-control" id="notif-titleEn" placeholder="e.g. New direct coach service to Dhaka">
+                </div>
+
+                <div class="form-group" style="grid-column: span 2;">
+                  <label class="form-label">বিস্তারিত বার্তা (বাংলা) <span>*</span></label>
+                  <textarea class="form-control" id="notif-bodyBn" rows="3" required placeholder="ব্যবহারকারীকে পাঠানোর বিস্তারিত তথ্য লিখুন..."></textarea>
+                </div>
+
+                <div class="form-group" style="grid-column: span 2;">
+                  <label class="form-label">বিস্তারিত বার্তা (English)</label>
+                  <textarea class="form-control" id="notif-bodyEn" rows="2" placeholder="Detailed notification content in English..."></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">লক্ষ্যমাত্রা স্ক্রিন লিংক (Target Route)</label>
+                  <select class="form-control" id="notif-targetRoute">
+                    <option value="none">কোনো নির্দিষ্ট লিংক নেই (General)</option>
+                    <option value="travel_guide">ভ্রমণ গাইড (Travel Guide)</option>
+                    <option value="emergency">জরুরি সেবা (Emergency Services)</option>
+                    <option value="healthcare">হাসপাতাল ও স্বাস্থ্য (Healthcare)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">ব্যানার ছবির লিংক (ঐচ্ছিক ইমেজ URL)</label>
+                  <input type="url" class="form-control" id="notif-imageUrl" placeholder="https://example.com/image.jpg">
+                </div>
+              </div>
+
+              <div style="margin-top: 24px;">
+                <button type="submit" class="btn btn-primary" id="send-notif-btn" style="padding: 12px 28px; font-size: 14.5px;">
+                  <i class="fas fa-paper-plane"></i>
+                  <span>সকল ব্যবহারকারীকে নোটিফিকেশন পাঠান</span>
+                </button>
+              </div>
+            </form>
+
+            <div style="margin-top: 40px;">
+              <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 16px; color: var(--text-main);">
+                <i class="fas fa-history" style="color: var(--primary); margin-right: 6px;"></i>সম্প্রতি প্রেরিত নোটিফিকেশনসমূহ
+              </h4>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>তারিখ ও সময়</th>
+                      <th>ধরন</th>
+                      <th>শিরোনাম</th>
+                      <th>বার্তা</th>
+                      <th style="text-align: right; width: 80px;">অ্যাকশন</th>
+                    </tr>
+                  </thead>
+                  <tbody id="sent-notifications-table-body">
+                    <tr><td colspan="5" style="text-align: center; padding: 24px;">কোনো নোটিফিকেশন পাওয়া যায়নি</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7b. Notice & Announcement Banner View -->
+      <section class="view-tab" id="view-notices">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-bullhorn" style="color: #ea580c;"></i>
+              <span>হোম স্ক্রিন নোটিশ ও ব্যানার ঘোষণা ব্যবস্থাপনা</span>
+            </div>
+          </div>
+          <div style="padding: 24px; max-width: 800px;">
+            <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+              এই প্যানেল থেকে আপনি "আমার কুষ্টিয়া" মোবাইল অ্যাপের হোম স্ক্রিনের শীর্ষে স্ক্রোলিং নোটিশ ব্যানার নিয়ন্ত্রণ করতে পারবেন। মেলা, বিশেষ ট্রেনের ঘোষণা, বা যেকোনো জরুরি বিজ্ঞপ্তি এখানে লিখলে অ্যাপের হোম স্ক্রিনে তা সাথে সাথে ভেসে উঠবে।
+            </p>
+
+            <form id="global-notice-form">
+              <div class="form-grid">
+                <div class="form-group" style="grid-column: span 2; display: flex; align-items: center; gap: 24px;">
+                  <label class="checkbox-group">
+                    <input type="checkbox" id="notice-isActive" checked>
+                    <span>নোটিশ ব্যানার সক্রিয় (Active) থাকবে</span>
+                  </label>
+                  <label class="checkbox-group">
+                    <input type="checkbox" id="notice-isUrgent">
+                    <span>জরুরি লাল ব্যানার হিসেবে দেখান (Urgent Alert)</span>
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">বিজ্ঞপ্তির শিরোনাম (বাংলা) <span>*</span></label>
+                  <input type="text" class="form-control" id="notice-titleBn" required placeholder="উদা: বিশেষ বিজ্ঞপ্তি বা কুষ্টিয়া লালন মেলা ২০২৬">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">বিজ্ঞপ্তির শিরোনাম (English)</label>
+                  <input type="text" class="form-control" id="notice-titleEn" placeholder="e.g. Important Notice / Special Announcement">
+                </div>
+
+                <div class="form-group" style="grid-column: span 2;">
+                  <label class="form-label">বিজ্ঞপ্তির বিস্তারিত বার্তা (বাংলায়) <span>*</span></label>
+                  <textarea class="form-control" id="notice-textBn" rows="3" required placeholder="উদা: কুষ্টিয়া লালন মেলা ২০২৬ উপলক্ষ্যে বিশেষ বাস ও ট্রেন সার্ভিস চালু থাকবে। জরুরি প্রয়োজনে ৯৯৯ নম্বরে কল করুন।"></textarea>
+                </div>
+
+                <div class="form-group" style="grid-column: span 2;">
+                  <label class="form-label">বিজ্ঞপ্তির বিস্তারিত বার্তা (English)</label>
+                  <textarea class="form-control" id="notice-textEn" rows="2" placeholder="e.g. Special train and bus services are operational for Lalon Mela 2026. For emergencies call 999."></textarea>
+                </div>
+              </div>
+
+              <div style="margin-top: 24px;">
+                <button type="submit" class="btn btn-primary" id="save-notice-btn">
+                  <i class="fas fa-save"></i>
+                  <span>নোটিশ সংরক্ষণ ও অ্যাপে লাইভ করুন</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7C. App Version Release & Update Management View -->
+      <section class="view-tab" id="view-app_updates">
+        <div style="display: grid; grid-template-columns: 1fr 340px; gap: 24px; align-items: start;">
+          <!-- Left Column: Release Update Form -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <i class="fas fa-rocket" style="color: #059669;"></i>
+                <span>নতুন অ্যাপ ভার্সন রিলিজ ও কনফিগারেশন (Publish App Update)</span>
+              </div>
+            </div>
+            <div style="padding: 24px;">
+              <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+                এখানে নতুন অ্যাপ ভার্সন (APK বা Play Store), চেঞ্জলগ এবং ফোর্স-আপডেট অপশন সেট করে সংরক্ষণ করুন। এটি সরাসরি ফায়ারবেজ <code>app_config/version_info</code> ডকুমেন্টে সংরক্ষিত হবে এবং অ্যাপের সেটিংস স্ক্রিনে স্বয়ংক্রিয়ভাবে আপডেট নোটিফিকেশন প্রদান করবে।
+              </p>
+
+              <form id="app-update-form">
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label class="form-label">ভার্সন নাম (Version Name) <span>*</span></label>
+                    <input type="text" class="form-control" id="upd-latestVersion" required placeholder="উদা: 1.0.0-beta.1 বা 1.0.1" value="1.0.0-beta.1">
+                    <small style="color: var(--text-muted); font-size: 11px;">মোবাইল অ্যাপের pubspec.yaml এর version নামের সাথে সামঞ্জস্যপূর্ণ</small>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">বিল্ড নম্বর (Build Number / Version Code) <span>*</span></label>
+                    <input type="number" class="form-control" id="upd-latestBuildNumber" required min="1" placeholder="1" value="1">
+                    <small style="color: var(--text-muted); font-size: 11px;">এই নম্বরের চেয়ে কম বিল্ড নম্বরের ফোনে আপডেট পাওয়া যাবে</small>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">রিলিজ চ্যানেল (Release Channel)</label>
+                    <select class="form-control" id="upd-channel">
+                      <option value="beta" selected>Beta (বেটা পরীক্ষামূলক)</option>
+                      <option value="stable">Stable (স্থিতিশীল চূড়ান্ত রিলিজ)</option>
+                      <option value="alpha">Alpha (প্রাথমিক আলফা টেস্ট)</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">রিলিজের তারিখ (Release Date)</label>
+                    <input type="date" class="form-control" id="upd-releaseDate">
+                  </div>
+
+                  <div class="form-group" style="grid-column: span 2;">
+                    <label class="form-label">আপডেট শিরোনাম (বাংলা) <span>*</span></label>
+                    <input type="text" class="form-control" id="upd-releaseTitleBn" required placeholder="উদা: আমার কুষ্টিয়া বেটা ১.০ রিলিজ হয়েছে!" value="আমার কুষ্টিয়া বেটা ১.০ রিলিজ হয়েছে!">
+                  </div>
+
+                  <div class="form-group" style="grid-column: span 2;">
+                    <label class="form-label">আপডেট শিরোনাম (English)</label>
+                    <input type="text" class="form-control" id="upd-releaseTitleEn" placeholder="e.g. Amar Kushtia Beta 1.0 is Out!" value="Amar Kushtia Beta 1.0 is Out!">
+                  </div>
+
+                  <div class="form-group" style="grid-column: span 2;">
+                    <label class="form-label">কী কী নতুন / চেঞ্জলগ (বাংলা) <span>*</span></label>
+                    <textarea class="form-control" id="upd-releaseNotesBn" rows="5" required placeholder="• বাস কাউন্টারের নতুন তালিকা ও যোগাযোগ&#10;• পারফরম্যান্স ও ল্যাগ সমস্যা সমাধান&#10;• সেটিংস অপশনে সরাসরি আপডেট সুবিধা">• কুষ্টিয়া জেলার বাস কাউন্টারের নতুন মোবাইল নম্বর ও তথ্য আপডেট&#10;• সম্পূর্ণ অ্যাপের ট্রানজিশন ও ইমেজ ক্যাশিং অপ্টিমাইজেশন (জিরো ল্যাগ)&#10;• সেটিংসে সরাসরি অ্যাপ আপডেট যাচাই ও রিলিজ সিস্টেম যুক্ত</textarea>
+                  </div>
+
+                  <div class="form-group" style="grid-column: span 2;">
+                    <label class="form-label">কী কী নতুন / চেঞ্জলগ (English)</label>
+                    <textarea class="form-control" id="upd-releaseNotesEn" rows="4" placeholder="• New bus counter contacts&#10;• Smooth performance and lag fixes&#10;• In-app update support">• Added updated bus counter contacts across Kushtia&#10;• Major UI rendering and startup lag optimizations&#10;• Integrated live app release management</textarea>
+                  </div>
+
+                  <div class="form-group" style="grid-column: span 2;">
+                    <label class="form-label">সরাসরি APK ডাউনলোড লিংক (Direct APK Link / Drive / Storage)</label>
+                    <input type="url" class="form-control" id="upd-apkDownloadUrl" placeholder="https://github.com/.../app-release.apk বা Google Drive লিংক">
+                    <small style="color: var(--text-muted); font-size: 11px;">ইউজার "এখনই আপডেট করুন" চাপলে সরাসরি এই APK ফাইল ডাউনলোড শুরু হবে</small>
+                  </div>
+
+                  <div class="form-group" style="grid-column: span 2;">
+                    <label class="form-label">গুগল প্লে-স্টোর লিংক (Google Play Store URL)</label>
+                    <input type="url" class="form-control" id="upd-playStoreUrl" placeholder="https://play.google.com/store/apps/details?id=com.amarkushtia.app">
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">নূন্যতম আবশ্যক বিল্ড (Min Supported Build)</label>
+                    <input type="number" class="form-control" id="upd-minSupportedBuildNumber" min="1" value="1">
+                    <small style="color: var(--text-muted); font-size: 11px;">এই নম্বরের নিচে থাকা ইউজারদের ফোর্স আপডেট দেখাবে</small>
+                  </div>
+
+                  <div class="form-group" style="display: flex; flex-direction: column; justify-content: center; gap: 8px;">
+                    <label class="form-label">বাধ্যতামূলক আপডেট (Force Update)</label>
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px;">
+                      <input type="checkbox" id="upd-isForceUpdate" style="width: 18px; height: 18px; accent-color: #dc2626;">
+                      <span style="color: #dc2626; font-weight: 600;">বাধ্যতামূলক আপডেট চালু করুন (ব্যবহারকারী আপডেট না করে অ্যাপ চালাতে পারবেন না)</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div style="margin-top: 24px; display: flex; gap: 12px; align-items: center;">
+                  <button type="submit" class="btn btn-primary" id="save-app-update-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>নতুন আপডেট রিলিজ ও প্রকাশ করুন</span>
+                  </button>
+                  <button type="button" class="btn btn-secondary" onclick="loadAppUpdateConfig()">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>রিলোড করুন</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Right Column: Live Status & App Preview Card -->
+          <div>
+            <div class="panel">
+              <div class="panel-header">
+                <div class="panel-title">
+                  <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                  <span>লাইভ রিলিজ স্ট্যাটাস</span>
+                </div>
+              </div>
+              <div style="padding: 20px;">
+                <div style="text-align: center; padding-bottom: 16px; border-bottom: 1px solid var(--border);">
+                  <div style="display: inline-block; padding: 12px 18px; background: #ecfdf5; border-radius: 50%; color: #059669; font-size: 28px; margin-bottom: 10px;">
+                    <i class="fas fa-mobile-alt"></i>
+                  </div>
+                  <h3 id="preview-version" style="margin: 0; font-size: 18px; color: var(--text-heading);">1.0.0-beta.1</h3>
+                  <span id="preview-channel" class="badge badge-warning" style="margin-top: 6px; display: inline-block;">BETA</span>
+                  <div id="preview-build" style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Build Code: 1</div>
+                </div>
+
+                <div style="margin-top: 16px; font-size: 13px; display: flex; flex-direction: column; gap: 10px;">
+                  <div>
+                    <span style="color: var(--text-muted); font-size: 11px; display: block;">রিলিজের তারিখ:</span>
+                    <strong id="preview-date">-</strong>
+                  </div>
+                  <div>
+                    <span style="color: var(--text-muted); font-size: 11px; display: block;">শিরোনাম:</span>
+                    <strong id="preview-title">আমার কুষ্টিয়া বেটা ১.০ রিলিজ</strong>
+                  </div>
+                  <div>
+                    <span style="color: var(--text-muted); font-size: 11px; display: block;">বাধ্যতামূলক আপডেট:</span>
+                    <span id="preview-force" class="badge badge-success">ঐচ্ছিক</span>
+                  </div>
+                  <div>
+                    <span style="color: var(--text-muted); font-size: 11px; display: block;">সরাসরি APK ডাউনলোড লিংক:</span>
+                    <a id="preview-apk-link" href="#" target="_blank" style="word-break: break-all; color: var(--primary); font-size: 12px; text-decoration: underline;">সেট করা নেই</a>
+                  </div>
+                  <div>
+                    <span style="color: var(--text-muted); font-size: 11px; display: block;">ফায়ারস্টোর পাথ:</span>
+                    <code style="font-size: 11px; background: var(--bg-hover); padding: 2px 6px; border-radius: 4px;">app_config/version_info</code>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Beta 1 Target Card -->
+            <div class="panel" style="margin-top: 16px; border-left: 4px solid #10b981;">
+              <div style="padding: 16px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <i class="fas fa-info-circle" style="color: #10b981;"></i>
+                  <strong style="font-size: 13px;">বর্তমান মোবাইল অ্যাপ কনফিগারেশন</strong>
+                </div>
+                <p style="font-size: 12px; color: var(--text-muted); margin: 0; line-height: 1.5;">
+                  মোবাইল অ্যাপে বর্তমানে <code>1.0.0-beta.1 (Build 1)</code> সেট করা আছে। অ্যাডমিন থেকে নতুন ভার্সন (যেমন <code>1.0.1</code> বা <code>Build 2</code>) প্রকাশ করলেই সকল ইউজারের ফোনে লাল "NEW" ব্যাজ সহ আপডেটের নোটিফিকেশন পৌঁছে যাবে!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. Firebase Settings View -->
+      <section class="view-tab" id="view-settings">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-fire" style="color: #ea580c;"></i>
+              <span>ফায়ারবেজ প্রজেক্ট কনফিগারেশন</span>
+            </div>
+          </div>
+          <div style="padding: 24px;">
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+              আপনার Firebase Console (Project Settings > General > Your Apps > Web App) থেকে কনফিগারেশনটি এখানে পেস্ট করুন। এটি আপনার ব্রাউজারে সংরক্ষিত থাকবে এবং সরাসরি ক্লাউড ফায়ারস্টোর ডাটাবেজের সাথে সংযোগ স্থাপন করবে।
+            </p>
+            <form id="firebase-config-form">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">apiKey <span>*</span></label>
+                  <input type="text" class="form-control" id="cfg-apiKey" required placeholder="AIzaSy...">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">authDomain <span>*</span></label>
+                  <input type="text" class="form-control" id="cfg-authDomain" required placeholder="your-project.firebaseapp.com">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">projectId <span>*</span></label>
+                  <input type="text" class="form-control" id="cfg-projectId" required placeholder="amar-kushtia-xxx">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">storageBucket</label>
+                  <input type="text" class="form-control" id="cfg-storageBucket" placeholder="your-project.appspot.com">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">messagingSenderId</label>
+                  <input type="text" class="form-control" id="cfg-messagingSenderId" placeholder="1234567890">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">appId <span>*</span></label>
+                  <input type="text" class="form-control" id="cfg-appId" required placeholder="1:123456:web:abcdef">
+                </div>
+              </div>
+              <div style="margin-top: 16px;">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-save"></i>
+                  <span>কনফিগারেশন সংরক্ষণ করুন</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8B. App Users / Citizens Management View -->
+      <section class="view-tab" id="view-users">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-users" style="color: var(--primary);"></i>
+              <span>আমার কুষ্টিয়া অ্যাপের নিবন্ধিত নাগরিক ও ব্যবহারকারী তালিকা</span>
+            </div>
+            <div class="panel-actions">
+              <span id="users-count-badge" class="badge badge-info" style="font-size: 13px; padding: 6px 12px;">মোট ০ জন নাগরিক</span>
+              <button class="btn btn-secondary btn-sm" onclick="loadUsersData()">
+                <i class="fas fa-sync-alt"></i> রিফ্রেশ করুন
+              </button>
+            </div>
+          </div>
+
+          <!-- Users Search and Filter Bar -->
+          <div style="padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; gap: 16px; flex-wrap: wrap; align-items: center; justify-content: space-between; background: var(--bg-surface);">
+            <div style="display: flex; gap: 10px; align-items: center; flex: 1; min-width: 280px;">
+              <i class="fas fa-search" style="color: var(--text-muted);"></i>
+              <input type="text" id="users-search-input" class="form-control" placeholder="নাম, ইমেইল বা ফোন নম্বর দিয়ে নাগরিক খুঁজুন..." oninput="filterUsersTable()">
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <label style="font-size: 13px; color: var(--text-muted); font-weight: 600;">রোল অনুযায়ী ফিল্টার:</label>
+              <select id="users-role-filter" class="form-control" style="width: 160px;" onchange="filterUsersTable()">
+                <option value="all">সকল ইউজার</option>
+                <option value="admin">অ্যাডমিন (Admin)</option>
+                <option value="citizen">নাগরিক (Citizen)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width: 60px;">ছবি</th>
+                  <th>নাগরিকের নাম</th>
+                  <th>ইমেইল ঠিকানা</th>
+                  <th>প্ল্যাটফর্ম / ডিভাইস</th>
+                  <th>ভূমিকা (Role)</th>
+                  <th>প্রথম যুক্ত হওয়ার তারিখ</th>
+                  <th>সর্বশেষ সক্রিয়তা</th>
+                  <th style="text-align: right; width: 140px;">পদক্ষেপ (Actions)</th>
+                </tr>
+              </thead>
+              <tbody id="users-table-body">
+                <tr>
+                  <td colspan="8" style="text-align: center; padding: 36px; color: var(--text-muted);">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 20px; margin-bottom: 8px; display: block;"></i>
+                    ব্যবহারকারীর তথ্য লোড হচ্ছে...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. Database Seeding View -->
+      <section class="view-tab" id="view-seed">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-cloud-upload-alt" style="color: var(--primary);"></i>
+              <span>প্রাথমিক ডেটাবেজ সিডিং (Seed Firestore)</span>
+            </div>
+          </div>
+          <div style="padding: 28px; max-width: 680px;">
+            <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">একটি ক্লিকে সকল ডাটাবেজ পূর্ণ করুন</h3>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px;">
+              এই অপশনটি ব্যবহার করে আপনি কুষ্টিয়া জেলার ৬টি উপজেলা, জাতীয় জরুরি হটলাইন, হাসপাতালের ওয়ার্ড ও বেড ফি, জেনারেল হাসপাতালের সার্জারি শিডিউল, ট্রেনের সময়সূচী এবং ইসলামী বিশ্ববিদ্যালয়ের আবাসিক হলের সমস্ত সরকারি তথ্য সরাসরি ফায়ারবেজ ফায়ারস্টোর ডাটাবেজে আপলোড করতে পারবেন।
+            </p>
+            <button class="btn btn-primary" id="seed-btn" onclick="seedAllCanonicalData()">
+              <i class="fas fa-database"></i>
+              <span>সব ক্যানোনিকাল ডাটা সিড করুন (Seed Database)</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Add / Edit Record Modal -->
+  <div class="modal-overlay" id="record-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="record-modal-title">নতুন তথ্য / রেকর্ড যুক্ত করুন</h3>
+        <button class="modal-close" onclick="closeRecordModal()">&times;</button>
+      </div>
+      <form id="record-form">
+        <div class="modal-body">
+          <div class="form-grid">
+            
+            <div class="form-group">
+              <label class="form-label">রেকর্ড আইডি (Unique ID) <span>*</span></label>
+              <input type="text" class="form-control" id="rec-id" required placeholder="hosp_kushtia_general">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">ক্যাটাগরি (Category) <span>*</span></label>
+              <select class="form-control" id="rec-categoryId" required>
+                <option value="emergency">জরুরি সেবা (Emergency)</option>
+                <option value="healthcare">স্বাস্থ্যসেবা ও হাসপাতাল (Healthcare)</option>
+                <option value="tourism">পর্যটন ও দর্শনীয় স্থান (Tourism)</option>
+                <option value="education">শিক্ষা প্রতিষ্ঠান (Education)</option>
+                <option value="transport">পরিবহন ও যোগাযোগ (Transport)</option>
+                <option value="agriculture_business">কৃষি ও বাণিজ্য (Agriculture & Business)</option>
+                <option value="public_services">সরকারি দপ্তর ও নাগরিক সেবা (Public Services)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">শিরোনাম (বাংলা) <span>*</span></label>
+              <input type="text" class="form-control" id="rec-titleBn" required placeholder="উদা: কুষ্টিয়া ২৫০ শয্যা জেনারেল হাসপাতাল">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">শিরোনাম (English)</label>
+              <input type="text" class="form-control" id="rec-titleEn" placeholder="e.g. Kushtia 250-bed General Hospital">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">উপজেলা <span>*</span></label>
+              <select class="form-control" id="rec-upazilaId" required>
+                <option value="kushtia_sadar">কুষ্টিয়া সদর</option>
+                <option value="kumarkhali">কুমারখালী</option>
+                <option value="bheramara">ভেড়ামারা</option>
+                <option value="mirpur">মিরপুর</option>
+                <option value="daulatpur">দৌলতপুর</option>
+                <option value="khoksa">খোকসা</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">সাবক্যাটাগরি (Subcategory)</label>
+              <input type="text" class="form-control" id="rec-subcategoryId" placeholder="উদা: সরকারি হাসপাতাল, থানা, কলেজ">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">যোগাযোগ ফোন নম্বর (কমা দিয়ে আলাদা করুন)</label>
+              <input type="text" class="form-control" id="rec-contactNumbers" placeholder="01711XXXXXX, 071-XXXXX">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">জরুরি হটলাইন নম্বর</label>
+              <input type="text" class="form-control" id="rec-emergencyHotlines" placeholder="01320XXXXXX, 999">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">ঠিকানা (বাংলা)</label>
+              <input type="text" class="form-control" id="rec-addressBn" placeholder="হাসপাতাল মোড়, কুষ্টিয়া সদর, কুষ্টিয়া">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">ঠিকানা (English)</label>
+              <input type="text" class="form-control" id="rec-addressEn" placeholder="Hospital Mor, Kushtia Sadar">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">অক্ষাংশ (Latitude)</label>
+              <input type="number" step="any" class="form-control" id="rec-latitude" placeholder="23.9012">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">দ্রাঘিমাংশ (Longitude)</label>
+              <input type="number" step="any" class="form-control" id="rec-longitude" placeholder="89.1234">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">সংক্ষিপ্ত বিবরণ (বাংলা)</label>
+              <input type="text" class="form-control" id="rec-shortDescriptionBn" placeholder="জেলার প্রধান সরকারি রেফারেল হাসপাতাল">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">সংক্ষিপ্ত বিবরণ (English)</label>
+              <input type="text" class="form-control" id="rec-shortDescriptionEn" placeholder="Main District Referral Hospital">
+            </div>
+
+            <div class="form-group full">
+              <label class="form-label">পূর্ণাঙ্গ বিবরণ (বাংলা)</label>
+              <textarea class="form-control" id="rec-descriptionBn" placeholder="হাসপাতাল ও সেবার বিস্তারিত বিবরণ..."></textarea>
+            </div>
+
+            <div class="form-group full">
+              <label class="form-label">পূর্ণাঙ্গ বিবরণ (English)</label>
+              <textarea class="form-control" id="rec-descriptionEn" placeholder="Full service description in English..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">সময়সূচী / খোলা থাকার সময়</label>
+              <input type="text" class="form-control" id="rec-openingHoursBn" placeholder="২৪ ঘণ্টা জরুরি, বহির্বিভাগ সকাল ৮টা-দুপুর ২টা">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">ফি বা টিকেটের মূল্য</label>
+              <input type="text" class="form-control" id="rec-feesNoticeBn" placeholder="বহির্বিভাগ টিকেট ১০ টাকা">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label"><i class="fas fa-globe"></i> অফিসিয়াল ওয়েবসাইট লিংক (Website URL)</label>
+              <input type="url" class="form-control" id="rec-website" placeholder="https://kushtia.gov.bd">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label"><i class="fas fa-directions"></i> গুগল ম্যাপস ডিরেকশন লিংক (Google Maps Directions)</label>
+              <input type="url" class="form-control" id="rec-directionsUrl" placeholder="https://maps.app.goo.gl/... বা https://www.google.com/maps/dir/...">
+            </div>
+
+            <div class="form-group full">
+              <label class="form-label"><i class="fas fa-map-marked-alt"></i> গুগল ম্যাপ এমবেড কোড বা লিংক (Google Maps Embed Link / Iframe HTML) <span>*এমবেডেড</span></label>
+              <input type="text" class="form-control" id="rec-mapEmbedUrl" placeholder="গুগল ম্যাপ শেয়ার থেকে 'Embed a map' কোড (<iframe src=...>) বা সরাসরি লিংক পেস্ট করুন">
+              <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Google Maps > Share > 'Embed a map' অপশন থেকে সম্পূর্ণ iframe কোড বা src লিংক পেস্ট করুন। স্বয়ংক্রিয়ভাবে এমবেড হবে।</div>
+              <div class="map-embed-preview-wrapper" id="map-embed-preview-wrapper" style="display: none; margin-top: 8px;">
+                <div class="map-iframe-box">
+                  <iframe id="map-embed-preview-frame" src="" width="100%" height="240" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group full">
+              <label class="form-label"><i class="fas fa-images"></i> ছবির ওয়েব লিংকসমূহ (Image URLs — প্রতি লাইনে একটি বা কমা দিয়ে আলাদা করুন)</label>
+              <textarea class="form-control" id="rec-imageUrls" rows="3" placeholder="https://images.unsplash.com/photo-1...&#10;https://example.com/photo2.jpg"></textarea>
+              <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">সরাসরি যেকোনো ছবির লিংক পেস্ট করলেই তাৎক্ষণিক নিচে প্রিভিউ তৈরি হবে।</div>
+              <div id="image-preview-container" class="image-preview-grid">
+                <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); font-size: 12px; padding: 10px;">কোনো ছবি যুক্ত করা হয়নি</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">যাচাইকরণ স্ট্যাটাস</label>
+              <select class="form-control" id="rec-verifiedBadgeStatus">
+                <option value="Verified">যাচাইকৃত (Verified)</option>
+                <option value="Partially Verified">আংশিক যাচাইকৃত (Partially Verified)</option>
+                <option value="Official">সরকারি অফিসিয়াল (Official)</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="display: flex; align-items: center; gap: 24px; padding-top: 24px;">
+              <label class="checkbox-group">
+                <input type="checkbox" id="rec-isFeatured">
+                <span>হোমপেজে ফিচারড করুন</span>
+              </label>
+              <label class="checkbox-group">
+                <input type="checkbox" id="rec-isActive" checked>
+                <span>সক্রিয় (Active)</span>
+              </label>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeRecordModal()">বাতিল</button>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i>
+            <span>সংরক্ষণ করুন</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Healthcare Fee Add / Edit Modal -->
+  <div class="modal-overlay" id="healthcare-modal">
+    <div class="modal-box" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="healthcare-modal-title">হাসপাতাল বেড ও ফি তথ্য</h3>
+        <button class="modal-close" onclick="closeHealthcareModal()">&times;</button>
+      </div>
+      <form id="healthcare-form">
+        <div class="modal-body">
+          <input type="hidden" id="hf-id">
+          <div class="form-group">
+            <label class="form-label">হাসপাতালের নাম <span>*</span></label>
+            <input type="text" class="form-control" id="hf-facilityNameBn" required placeholder="কুষ্টিয়া ২৫০ শয্যা জেনারেল হাসপাতাল">
+          </div>
+          <div class="form-group">
+            <label class="form-label">ওয়ার্ড বা বেডের ধরন <span>*</span></label>
+            <input type="text" class="form-control" id="hf-bedTypeBn" required placeholder="সাধারণ ওয়ার্ড / এসি কেবিন / সিসিইউ">
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">সরকারি ফি (টাকা) <span>*</span></label>
+              <input type="number" class="form-control" id="hf-feeBdt" required placeholder="0">
+            </div>
+            <div class="form-group" style="display: flex; align-items: center; padding-top: 24px;">
+              <label class="checkbox-group">
+                <input type="checkbox" id="hf-isFree">
+                <span>সম্পূর্ণ ফ্রি সেবা</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">মন্তব্য / অতিরিক্ত বিবরণ</label>
+            <input type="text" class="form-control" id="hf-noteBn" placeholder="সরকারি ওষুধ ও খাবার বিনামূল্যে অন্তর্ভুক্ত">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeHealthcareModal()">বাতিল</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> সংরক্ষণ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Surgery Schedule Add / Edit Modal -->
+  <div class="modal-overlay" id="surgery-modal">
+    <div class="modal-box" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="surgery-modal-title">সার্জারি শিডিউল তথ্য</h3>
+        <button class="modal-close" onclick="closeSurgeryModal()">&times;</button>
+      </div>
+      <form id="surgery-form">
+        <div class="modal-body">
+          <input type="hidden" id="sg-id">
+          <div class="form-group">
+            <label class="form-label">বিভাগের নাম <span>*</span></label>
+            <input type="text" class="form-control" id="sg-departmentBn" required placeholder="জেনারেল সার্জারি বিভাগ / অর্থোপেডিকস">
+          </div>
+          <div class="form-group">
+            <label class="form-label">সার্জারির ধরন <span>*</span></label>
+            <input type="text" class="form-control" id="sg-surgeryTypeBn" required placeholder="এপেন্ডিসাইটিস, হার্নিয়া, গলব্লাডার">
+          </div>
+          <div class="form-group">
+            <label class="form-label">অপারেশন দিবস / সময়সূচী <span>*</span></label>
+            <input type="text" class="form-control" id="sg-scheduleDaysBn" required placeholder="রবিবার ও বুধবার সকাল ৯:০০">
+          </div>
+          <div class="form-group">
+            <label class="form-label">ওটি / ওয়ার্ড <span>*</span></label>
+            <input type="text" class="form-control" id="sg-wardOrOtBn" required placeholder="প্রধান অপারেশন থিয়েটার (ওটি-১)">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeSurgeryModal()">বাতিল</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> সংরক্ষণ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Transport Schedule Add / Edit Modal -->
+  <div class="modal-overlay" id="transport-modal">
+    <div class="modal-box" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="transport-modal-title">ট্রেন সময়সূচী তথ্য</h3>
+        <button class="modal-close" onclick="closeTransportModal()">&times;</button>
+      </div>
+      <form id="transport-form">
+        <div class="modal-body">
+          <input type="hidden" id="tr-id">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">ট্রেন নম্বর <span>*</span></label>
+              <input type="text" class="form-control" id="tr-trainNumber" required placeholder="৭৬৫/৭৬৬">
+            </div>
+            <div class="form-group">
+              <label class="form-label">ট্রেনের নাম <span>*</span></label>
+              <input type="text" class="form-control" id="tr-trainNameBn" required placeholder="সুন্দরবন এক্সপ্রেস">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">রুট ও সংযোগ স্টেশন <span>*</span></label>
+            <input type="text" class="form-control" id="tr-routeBn" required placeholder="খুলনা ⇄ পোড়াদহ জংশন ⇄ ঢাকা">
+          </div>
+          <div class="form-group">
+            <label class="form-label">সাপ্তাহিক ছুটির দিন <span>*</span></label>
+            <input type="text" class="form-control" id="tr-offDayBn" required placeholder="মঙ্গলবার (নাই হলে 'নাই' লিখুন)">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeTransportModal()">বাতিল</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> সংরক্ষণ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- IU Hall Add / Edit Modal -->
+  <div class="modal-overlay" id="iu-hall-modal">
+    <div class="modal-box" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="iu-hall-modal-title">ইবি আবাসিক হল তথ্য</h3>
+        <button class="modal-close" onclick="closeIUHallModal()">&times;</button>
+      </div>
+      <form id="iu-hall-form">
+        <div class="modal-body">
+          <input type="hidden" id="iuh-id">
+          <div class="form-group">
+            <label class="form-label">হলের নাম <span>*</span></label>
+            <input type="text" class="form-control" id="iuh-hallNameBn" required placeholder="সাদ্দাম হোসেন হল">
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">শিক্ষার্থী ধরন <span>*</span></label>
+              <select class="form-control" id="iuh-studentTypeBn" required>
+                <option value="ছাত্র">ছাত্র (Male)</option>
+                <option value="ছাত্রী">ছাত্রী (Female)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">যোগাযোগ ফোন</label>
+              <input type="text" class="form-control" id="iuh-contactPhone" placeholder="01711XXXXXX">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">প্রভোস্টের নাম ও পদবী <span>*</span></label>
+            <input type="text" class="form-control" id="iuh-provostNameBn" required placeholder="অধ্যাপক ড. ...">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeIUHallModal()">বাতিল</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> সংরক্ষণ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- National Hotline Add / Edit Modal -->
+  <div class="modal-overlay" id="hotline-modal">
+    <div class="modal-box" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="hotline-modal-title">জাতীয় ও জরুরি হটলাইন</h3>
+        <button class="modal-close" onclick="closeHotlineModal()">&times;</button>
+      </div>
+      <form id="hotline-form">
+        <div class="modal-body">
+          <input type="hidden" id="hl-id">
+          <div class="form-group">
+            <label class="form-label">হটলাইন নম্বর (সংক্ষিপ্ত কোড) <span>*</span></label>
+            <input type="text" class="form-control" id="hl-hotlineNumber" required placeholder="999 বা 16122">
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">শিরোনাম (বাংলা) <span>*</span></label>
+              <input type="text" class="form-control" id="hl-titleBn" required placeholder="জাতীয় জরুরি সেবা">
+            </div>
+            <div class="form-group">
+              <label class="form-label">শিরোনাম (English)</label>
+              <input type="text" class="form-control" id="hl-titleEn" placeholder="National Emergency Service">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">বিবরণ ও সেবার ধরন <span>*</span></label>
+            <textarea class="form-control" id="hl-descriptionBn" required placeholder="পুলিশ, ফায়ার সার্ভিস ও অ্যাম্বুলেন্স সহায়তার জন্য টোল ফ্রি"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeHotlineModal()">বাতিল</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> সংরক্ষণ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add / Edit Category Modal -->
+  <div class="modal-overlay" id="category-modal">
+    <div class="modal-box" style="max-width: 620px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="category-modal-title">নতুন সেবা / বিভাগ যুক্ত করুন</h3>
+        <button class="modal-close" onclick="closeCategoryModal()">&times;</button>
+      </div>
+      <form id="category-form">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">বিভাগ আইডি (Slug / ID) <span>*</span></label>
+              <input type="text" class="form-control" id="cat-id" required placeholder="blood_bank, electricity, legal">
+              <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">ছোট হাতের ইংরেজি ও আন্ডারস্কোর ব্যবহার করুন</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">আইকন প্রতীক (Icon) <span>*</span></label>
+              <select class="form-control" id="cat-iconName" required>
+                <option value="emergency">🚨 Emergency (জরুরি সেবা)</option>
+                <option value="hospital">🏥 Hospital (স্বাস্থ্যসেবা ও হাসপাতাল)</option>
+                <option value="police">🛡️ Police (থানা ও নিরাপত্তা)</option>
+                <option value="fire">🧯 Fire Service (দমকল স্টেশন)</option>
+                <option value="train">🚆 Train (রেলওয়ে যোগাযোগ)</option>
+                <option value="bus">🚌 Bus (বাস ও পরিবহন কাউন্টার)</option>
+                <option value="tourism">📸 Tourism (দর্শনীয় স্থান ও পর্যটন)</option>
+                <option value="government">🏛️ Government (সরকারি দপ্তর ও প্রশাসন)</option>
+                <option value="education">🎓 Education (শিক্ষা ও বিশ্ববিদ্যালয়)</option>
+                <option value="food">🍽️ Food (খাবার ও মিষ্টান্ন)</option>
+                <option value="craft">🎨 Craft (হস্তশিল্প ও বস্ত্র)</option>
+                <option value="agriculture">🌾 Agriculture (কৃষি ও কৃষক সেবা)</option>
+                <option value="blood">🩸 Blood Bank (রক্তদান সেবা)</option>
+                <option value="bolt">⚡ Electricity (বিদ্যুৎ অফিস)</option>
+                <option value="phone">📞 Hotline (জরুরি হটলাইন)</option>
+                <option value="map">🗺️ Atlas (কুষ্টিয়া মানচিত্র)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">বিভাগের নাম (বাংলা) <span>*</span></label>
+              <input type="text" class="form-control" id="cat-titleBn" required placeholder="উদা: রক্তদান ও ব্লাড ব্যাংক">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">বিভাগের নাম (English) <span>*</span></label>
+              <input type="text" class="form-control" id="cat-titleEn" required placeholder="e.g. Blood Bank & Donors">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">সংক্ষিপ্ত বিবরণ (বাংলা)</label>
+              <input type="text" class="form-control" id="cat-subtitleBn" placeholder="উদা: জরুরি রক্তদাতা ও ব্লাড ব্যাংক যোগাযোগ">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">সংক্ষিপ্ত বিবরণ (English)</label>
+              <input type="text" class="form-control" id="cat-subtitleEn" placeholder="e.g. Emergency Blood Donors & Banks">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">থিম রং (Theme Color) <span>*</span></label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="color" id="cat-colorPicker" value="#1E5638" style="width: 44px; height: 38px; border: 1px solid var(--border); border-radius: 6px; padding: 2px; cursor: pointer;" oninput="document.getElementById('cat-colorHex').value = this.value">
+                <input type="text" class="form-control" id="cat-colorHex" required value="#1E5638" placeholder="#1E5638" oninput="document.getElementById('cat-colorPicker').value = this.value">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">ব্যাকগ্রাউন্ড হালকা রং (Bg Color)</label>
+              <input type="text" class="form-control" id="cat-bgColorHex" value="#E2F0E8" placeholder="#E2F0E8">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">প্রদর্শনের ক্রম (Sort Order)</label>
+              <input type="number" class="form-control" id="cat-sortOrder" value="1" min="1">
+            </div>
+
+            <div class="form-group" style="display: flex; align-items: center; gap: 8px; padding-top: 24px;">
+              <input type="checkbox" id="cat-isActive" checked style="width: 18px; height: 18px; accent-color: var(--primary);">
+              <label for="cat-isActive" style="font-weight: 600; font-size: 13px; cursor: pointer;">অ্যাপে সক্রিয় রাখুন (Active)</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeCategoryModal()">বাতিল</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> বিভাগ সংরক্ষণ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Local Route Modal -->
+  <div class="modal-overlay" id="route-modal">
+    <div class="modal-box" style="max-width: 860px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="route-modal-title">
+          <i class="fas fa-bus" style="color: var(--primary);"></i>
+          <span>লোকাল বাস রুট ও স্টপ ব্যবস্থাপনা</span>
+        </h3>
+        <button class="modal-close" onclick="closeRouteModal()">&times;</button>
+      </div>
+      <form id="route-form">
+        <input type="hidden" id="route-id">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">রুটের নাম (বাংলা) <span>*</span></label>
+              <input type="text" class="form-control" id="route-nameBn" required placeholder="উদা: কুষ্টিয়া — মেহেরপুর">
+            </div>
+            <div class="form-group">
+              <label class="form-label">রুটের নাম (English) <span>*</span></label>
+              <input type="text" class="form-control" id="route-nameEn" required placeholder="e.g. Kushtia — Meherpur">
+            </div>
+            <div class="form-group">
+              <label class="form-label">উৎস স্টপ (Origin) <span>*</span></label>
+              <input type="text" class="form-control" id="route-origin" required placeholder="উদা: কুষ্টিয়া বাস টার্মিনাল">
+            </div>
+            <div class="form-group">
+              <label class="form-label">গন্তব্য স্টপ (Destination) <span>*</span></label>
+              <input type="text" class="form-control" id="route-destination" required placeholder="উদা: মেহেরপুর">
+            </div>
+            <div class="form-group">
+              <label class="form-label">প্রতি কিঃ মিঃ সরকারি গেজেট ভাড়া হার (টাকা) <span>*</span></label>
+              <input type="number" step="0.01" class="form-control" id="route-ratePerKm" value="2.40" placeholder="2.40">
+            </div>
+            <div class="form-group" style="display: flex; align-items: center; gap: 8px; padding-top: 24px;">
+              <input type="checkbox" id="route-sameReverseFare" checked style="width: 18px; height: 18px; accent-color: var(--primary);">
+              <label for="route-sameReverseFare" style="font-weight: 600; font-size: 13px; cursor: pointer;">উভয়মুখী ভাড়া একই প্রযোজ্য (Same Reverse Fare)</label>
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+              <label class="form-label">রুট নোট / বিবরণ</label>
+              <input type="text" class="form-control" id="route-notes" placeholder="উদা: মোজমপুর ও গাংনী হয়ে কুষ্টিয়া-মেহেরপুর সড়ক। সরকার ঘোষিত গেজেট হার প্রতি কিঃ মিঃ ২.৪০ টাকা হিসাবে কার্যকর।">
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label class="form-label" style="margin-bottom: 0;">স্টপ তালিকা ফরম্যাট: <code>স্টপের নাম (কিমি)</code> অথবা শুধু নাম (কমা দিয়ে আলাদা করুন) <span>*</span></label>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="autoCalculateFaresFromInput()" style="padding: 4px 10px; font-size: 12px; background: #e8f5e9; color: #13542e; border-color: #c8e6c9;">
+                  <i class="fas fa-calculator"></i> অটো কাউন্টার-টু-কাউন্টার হিসাব
+                </button>
+              </div>
+              <textarea class="form-control" id="route-stops-input" rows="4" required placeholder="কুষ্টিয়া বাস টার্মিনাল (0), মজমপুর গেট (3), ত্রি-মোহনী (8), চারমাইল (9.5), মশান (12), ... মেহেরপুর (63.5)"></textarea>
+              <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">টিপস: ব্র্যাকেটে কিমি লিখলে (যেমন: মজমপুর গেট (3)) ওপরের 'অটো কাউন্টার-টু-কাউন্টার হিসাব' বাটনে চাপ দিলে ২.৪০ টাকা/কিমি হারে স্বয়ংক্রিয়ভাবে সকল পেয়ার তৈরি হবে।</div>
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label class="form-label" style="margin-bottom: 0;">কাউন্টার-টু-কাউন্টার বা স্টপেজ ভাড়া তালিকা (ফরম্যাট: <code>উৎস-গন্তব্য: ভাড়া</code>, কমা দিয়ে আলাদা)</label>
+                <span id="route-fares-count" style="font-size: 12px; font-weight: 600; color: var(--primary);">০ টি জোড়া</span>
+              </div>
+              <textarea class="form-control" id="route-fares-input" rows="4" placeholder="কুষ্টিয়া বাস টার্মিনাল-মজমপুর গেট: 7, কুষ্টিয়া বাস টার্মিনাল-গাংনী: 118, কুষ্টিয়া বাস টার্মিনাল-মেহেরপুর: 152, ..."></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeRouteModal()">বাতিল</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> রুট ও ভাড়ার তালিকা সংরক্ষণ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: View All Counter-to-Counter Fares Matrix -->
+  <div class="modal-overlay" id="fare-matrix-modal">
+    <div class="modal-box" style="max-width: 950px;">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <i class="fas fa-ticket-alt" style="color: var(--primary);"></i>
+          <span id="fare-matrix-title">কাউন্টার-টু-কাউন্টার সম্পূর্ণ ভাড়ার চার্ট</span>
+        </h3>
+        <button class="modal-close" onclick="closeFareMatrixModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom: 14px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+          <div style="display: flex; gap: 8px; align-items: center; flex: 1; min-width: 250px;">
+            <i class="fas fa-search" style="color: var(--text-muted);"></i>
+            <input type="text" id="fare-matrix-filter" class="form-control" placeholder="স্টপ বা কাউন্টারের নাম লিখে খুঁজুন (যেমন: গাংনী, বামুন্দি, মজমপুর)..." oninput="filterFareMatrix()">
+          </div>
+          <div id="fare-matrix-summary" style="font-size: 13px; font-weight: 600; color: var(--text-muted);"></div>
+        </div>
+        <div class="table-responsive" style="max-height: 480px; overflow-y: auto;">
+          <table class="data-table" style="font-size: 13px;">
+            <thead style="position: sticky; top: 0; background: var(--bg-surface); z-index: 2;">
+              <tr>
+                <th style="width: 50px;">#</th>
+                <th>যাত্রা শুরুর কাউন্টার / স্টপ</th>
+                <th>নামার কাউন্টার / স্টপ</th>
+                <th>দূরত্ব (কিমি)</th>
+                <th style="text-align: right; width: 120px;">ভাড়া (টাকা)</th>
+              </tr>
+            </thead>
+            <tbody id="fare-matrix-table-body">
+              <tr><td colspan="5" style="text-align: center; padding: 24px;">লোড হচ্ছে...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeFareMatrixModal()">বন্ধ করুন</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Destination Modal -->
+  <div class="modal-overlay" id="destination-modal">
+    <div class="modal-box" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="destination-modal-title">নতুন গন্তব্য যোগ করুন</h3>
+        <button class="modal-close" onclick="closeDestinationModal()">&times;</button>
+      </div>
+      <form id="destination-form">
+        <input type="hidden" id="dest-id">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">গন্তব্যের নাম (বাংলা) <span>*</span></label>
+              <input type="text" class="form-control" id="dest-nameBn" required placeholder="উদা: ঢাকা">
+            </div>
+            <div class="form-group">
+              <label class="form-label">গন্তব্যের নাম (English) <span>*</span></label>
+              <input type="text" class="form-control" id="dest-nameEn" required placeholder="e.g. Dhaka">
+            </div>
+            <div class="form-group">
+              <label class="form-label">বিভাগ <span>*</span></label>
+              <input type="text" class="form-control" id="dest-division" required placeholder="উদা: ঢাকা বিভাগ">
+            </div>
+            <div class="form-group">
+              <label class="form-label">প্রদর্শনের ক্রম (Sort Order)</label>
+              <input type="number" class="form-control" id="dest-sortOrder" value="1" min="1">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeDestinationModal()">বাতিল</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> গন্তব্য সংরক্ষণ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Bus Operator Modal -->
+  <div class="modal-overlay" id="operator-modal">
+    <div class="modal-box" style="max-width: 680px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="operator-modal-title">নতুন বাস অপারেটর যোগ করুন</h3>
+        <button class="modal-close" onclick="closeOperatorModal()">&times;</button>
+      </div>
+      <form id="operator-form">
+        <input type="hidden" id="opr-id">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">অপারেটরের নাম (বাংলা) <span>*</span></label>
+              <input type="text" class="form-control" id="opr-nameBn" required placeholder="উদা: এসবি সুপার ডিলাক্স">
+            </div>
+            <div class="form-group">
+              <label class="form-label">অপারেটরের নাম (English) <span>*</span></label>
+              <input type="text" class="form-control" id="opr-nameEn" required placeholder="e.g. SB Super Deluxe">
+            </div>
+            <div class="form-group">
+              <label class="form-label"><i class="fas fa-couch"></i> বাসের ধরন (Bus Type / কোচ)</label>
+              <input type="text" class="form-control" id="opr-busType" placeholder="উদা: এসি ও নন-এসি লাক্সারি কোচ">
+              <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px;">
+                <span>পরামর্শ:</span>
+                <a href="javascript:void(0)" onclick="document.getElementById('opr-busType').value='এসি ও নন-এসি';">এসি ও নন-এসি</a> |
+                <a href="javascript:void(0)" onclick="document.getElementById('opr-busType').value='এসি বিজনেস ক্লাস';">এসি বিজনেস ক্লাস</a> |
+                <a href="javascript:void(0)" onclick="document.getElementById('opr-busType').value='নন-এসি চেয়ার কোচ';">নন-এসি চেয়ার কোচ</a> |
+                <a href="javascript:void(0)" onclick="document.getElementById('opr-busType').value='ভিআইপি স্লিপার কোচ';">ভিআইপি স্লিপার কোচ</a>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label"><i class="fas fa-phone"></i> কেন্দ্রীয় হেল্পলাইন নম্বর</label>
+              <input type="text" class="form-control" id="opr-contactPrimary" placeholder="01711-XXXXXX">
+            </div>
+            <div class="form-group">
+              <label class="form-label"><i class="fas fa-info-circle"></i> সার্ভিস স্ট্যাটাস (Service Badge)</label>
+              <input type="text" class="form-control" id="opr-serviceStatus" placeholder="উদা: নিয়মিত চলাচল (Regular)">
+            </div>
+            <div class="form-group">
+              <label class="form-label"><i class="fas fa-map-marker-alt"></i> কুষ্টিয়া মূল বোর্ডিং পয়েন্ট (Starting Point)</label>
+              <input type="text" class="form-control" id="opr-startingPoint" placeholder="উদা: মজমপুর গেট / চৌড়হাস টার্মিনাল">
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+              <label class="form-label"><i class="fas fa-image"></i> অপারেটর / কোম্পানির লোগো লিংক (Logo URL)</label>
+              <div style="display: flex; gap: 10px; align-items: center;">
+                <input type="url" class="form-control" id="opr-logoUrl" placeholder="https://example.com/logo.png" oninput="updateOperatorLogoPreview(this.value)">
+                <div id="opr-logo-preview" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; background: #f8fafc; overflow: hidden; flex-shrink: 0;">
+                  <i class="fas fa-bus" style="color: var(--text-muted); font-size: 18px;"></i>
+                </div>
+              </div>
+              <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">বাস কোম্পানি বা অপারেটরের লোগোর সরাসরি ছবির ওয়েব লিংক দিন। মোবাইল অ্যাপের কার্ড ও বিস্তারিত স্ক্রিনে সুন্দরভাবে প্রদর্শিত হবে।</div>
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+              <label class="form-label"><i class="fas fa-route"></i> রুট ও গন্তব্যসমূহ (Routes / Destinations)</label>
+              <input type="text" class="form-control" id="opr-destinationIds" placeholder="উদা: ঢাকা, চট্টগ্রাম, সিলেট, কক্সবাজার, রাজশাহী, খুলনা">
+              <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">কুষ্টিয়া থেকে যেসব গন্তব্যে বা রুটে বাস চলাচল করে (কমা দিয়ে আলাদা করুন)। দ্রুত যুক্ত করতে রুটে ক্লিক করুন:</div>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;">
+                <span class="badge" style="cursor: pointer; background: #e0f2fe; color: #0284c7; padding: 4px 8px; border-radius: 6px;" onclick="addRouteToOperatorInput('ঢাকা')">+ ঢাকা</span>
+                <span class="badge" style="cursor: pointer; background: #e0f2fe; color: #0284c7; padding: 4px 8px; border-radius: 6px;" onclick="addRouteToOperatorInput('চট্টগ্রাম')">+ চট্টগ্রাম</span>
+                <span class="badge" style="cursor: pointer; background: #e0f2fe; color: #0284c7; padding: 4px 8px; border-radius: 6px;" onclick="addRouteToOperatorInput('সিলেট')">+ সিলেট</span>
+                <span class="badge" style="cursor: pointer; background: #e0f2fe; color: #0284c7; padding: 4px 8px; border-radius: 6px;" onclick="addRouteToOperatorInput('কক্সবাজার')">+ কক্সবাজার</span>
+                <span class="badge" style="cursor: pointer; background: #e0f2fe; color: #0284c7; padding: 4px 8px; border-radius: 6px;" onclick="addRouteToOperatorInput('রাজশাহী')">+ রাজশাহী</span>
+                <span class="badge" style="cursor: pointer; background: #e0f2fe; color: #0284c7; padding: 4px 8px; border-radius: 6px;" onclick="addRouteToOperatorInput('খুলনা')">+ খুলনা</span>
+                <span class="badge" style="cursor: pointer; background: #e0f2fe; color: #0284c7; padding: 4px 8px; border-radius: 6px;" onclick="addRouteToOperatorInput('রংপুর')">+ রংপুর</span>
+                <span class="badge" style="cursor: pointer; background: #e0f2fe; color: #0284c7; padding: 4px 8px; border-radius: 6px;" onclick="addRouteToOperatorInput('বরিশাল')">+ বরিশাল</span>
+              </div>
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+              <label class="form-label">প্রধান কার্যালয় / সংক্ষিপ্ত বিবরণ</label>
+              <input type="text" class="form-control" id="opr-descriptionBn" placeholder="উদা: মজমপুর গেট, কুষ্টিয়া অঞ্চলের সর্ববৃহৎ এসি/নন-এসি বাস সার্ভিস">
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+              <label class="form-label">অনলাইন টিকিট বা ওয়েবসাইট লিংক</label>
+              <input type="url" class="form-control" id="opr-websiteUrl" placeholder="https://shohoz.com">
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+              <label class="form-label">কুষ্টিয়া কাউন্টারের নাম ও ফোন (কমা দিয়ে আলাদা করুন)</label>
+              <textarea class="form-control" id="opr-counters-input" rows="2" placeholder="মোজমপুর কাউন্টার: 01711-231145, চৌড়হাস কাউন্টার: 01715-442200"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeOperatorModal()">বাতিল</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> অপারেটর সংরক্ষণ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Operator Counters Management Modal -->
+  <div class="modal-overlay" id="counters-modal">
+    <div class="modal-box" style="max-width: 780px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="counters-modal-title">
+          <i class="fas fa-store" style="color: var(--primary);"></i>
+          <span>কাউন্টারসমূহ পরিচালনা</span>
+        </h3>
+        <button class="modal-close" onclick="closeCountersModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <span id="counters-operator-name" style="font-weight: 700; color: var(--text-main); font-size: 14px;"></span>
+          <button class="btn btn-primary btn-sm" onclick="openAddCounterModal()">
+            <i class="fas fa-plus"></i> নতুন কাউন্টার যোগ করুন
+          </button>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>কাউন্টারের নাম</th>
+                <th>উপজেলা / এলাকা</th>
+                <th>মোবাইল / ফোন</th>
+                <th>গুগল ম্যাপস</th>
+                <th style="text-align: right; width: 110px;">অ্যাকশন</th>
+              </tr>
+            </thead>
+            <tbody id="counters-table-body">
+              <tr><td colspan="5" style="text-align: center; padding: 20px;">কোনো কাউন্টার নেই</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeCountersModal()">বন্ধ করুন</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Single Counter Edit/Add Modal -->
+  <div class="modal-overlay" id="counter-edit-modal">
+    <div class="modal-box" style="max-width: 540px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="counter-edit-modal-title">টিকেট কাউন্টার তথ্য</h3>
+        <button class="modal-close" onclick="closeCounterEditModal()">&times;</button>
+      </div>
+      <form id="counter-edit-form">
+        <input type="hidden" id="cnt-id">
+        <input type="hidden" id="cnt-operator-id">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group" style="grid-column: span 2;">
+              <label class="form-label">কাউন্টারের নাম (বাংলা) <span>*</span></label>
+              <input type="text" class="form-control" id="cnt-name" required placeholder="উদা: মজমপুর গেট প্রধান কাউন্টার">
+            </div>
+            <div class="form-group">
+              <label class="form-label">উপজেলা <span>*</span></label>
+              <select class="form-control" id="cnt-upazilaId">
+                <option value="UPZ-002">কুষ্টিয়া সদর</option>
+                <option value="UPZ-003">কুমারখালী</option>
+                <option value="UPZ-004">মিরপুর</option>
+                <option value="UPZ-005">ভেড়ামারা</option>
+                <option value="UPZ-006">খোকসা</option>
+                <option value="UPZ-007">দৌলতপুর</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">বুকিং ফোন নম্বর <span>*</span></label>
+              <input type="text" class="form-control" id="cnt-phone" required placeholder="01711-XXXXXX">
+            </div>
+            <div class="form-group">
+              <label class="form-label">বিকল্প ফোন নম্বর (ঐচ্ছিক)</label>
+              <input type="text" class="form-control" id="cnt-phoneSecondary" placeholder="01712-XXXXXX">
+            </div>
+            <div class="form-group">
+              <label class="form-label">বোর্ডিং / মূল যাত্রা পয়েন্ট</label>
+              <select class="form-control" id="cnt-isStartingPoint">
+                <option value="false">না (সাধারণ কাউন্টার)</option>
+                <option value="true">হ্যাঁ (মূল বোর্ডিং স্টেশন)</option>
+              </select>
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+              <label class="form-label">ঠিকানা / ল্যান্ডমার্ক</label>
+              <input type="text" class="form-control" id="cnt-address" placeholder="উদা: মজমপুর গেট গোলচত্বর সংলগ্ন, কুষ্টিয়া">
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+              <label class="form-label">গুগল ম্যাপস লিংক বা কো-অর্ডিনেট</label>
+              <input type="url" class="form-control" id="cnt-mapsUrl" placeholder="https://maps.google.com/...">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeCounterEditModal()">বাতিল</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> কাউন্টার সংরক্ষণ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Fullscreen Login Wrapper (If unauthenticated) -->
+  <div class="auth-wrapper" id="auth-wrapper" style="display: none;">
+    <div class="auth-card">
+      <div class="auth-card-logo">
+        <i class="fas fa-user-shield"></i>
+      </div>
+      <h2>অ্যাডমিন কন্ট্রোল প্যানেল</h2>
+      <p>Amar Kushtia সেন্ট্রাল ম্যানেজমেন্ট পোর্টালে প্রবেশ করুন</p>
+      
+      <div class="auth-error" id="login-error"></div>
+
+      <form id="login-form">
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label">অ্যাডমিন ইমেইল <span>*</span></label>
+          <input type="email" class="form-control" id="login-email" required placeholder="admin@amarkushtia.bd">
+        </div>
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label">পাসওয়ার্ড <span>*</span></label>
+          <input type="password" class="form-control" id="login-password" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 8px;">
+          <i class="fas fa-sign-in-alt"></i>
+          <span>লগইন করুন</span>
+        </button>
+
+        <div style="margin: 14px 0 8px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 12px;">
+          <span>— অথবা কোনো লগইন ছাড়াই —</span>
+        </div>
+        <button type="button" class="btn btn-secondary" onclick="enterDirectly()" style="width: 100%; justify-content: center; background: #e8f5e9; color: #13542e; border-color: #c8e6c9;">
+          <i class="fas fa-bolt"></i>
+          <span>সরাসরি ড্যাশবোর্ডে প্রবেশ করুন (Quick Access)</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="seed_data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

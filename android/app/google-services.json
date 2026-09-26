@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "873618382819",
+    "project_id": "amar-kushtia-419ec",
+    "storage_bucket": "amar-kushtia-419ec.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873618382819:android:68b77ca055c1479e474ad6",
+        "android_client_info": {
+          "package_name": "com.belayet.amar_kushtia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "873618382819-ktg0tciajeu9ak8iau3587u74n82h4lv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAM9NErSU1yXd-CzyXRqbLYQdpEcvQq3NA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "873618382819-ktg0tciajeu9ak8iau3587u74n82h4lv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
