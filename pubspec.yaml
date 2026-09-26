@@ -76,27 +76,7 @@ flutter:
     - assets/fonts/
 
   fonts:
-    - family: Li Abu J M Akkas
-      fonts:
-        - asset: assets/fonts/LiAbuJMAkkas-Unicode.ttf
-        - asset: assets/fonts/LiAbuJMAkkas-UnicodeItalic.ttf
-          style: italic
-    - family: Li Abu J M Akkas Unicode
-      fonts:
-        - asset: assets/fonts/LiAbuJMAkkas-Unicode.ttf
-        - asset: assets/fonts/LiAbuJMAkkas-UnicodeItalic.ttf
-          style: italic
-    - family: Hind Siliguri
-      fonts:
-        - asset: assets/fonts/HindSiliguri-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/HindSiliguri-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/HindSiliguri-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/HindSiliguri-Bold.ttf
-          weight: 700
-    - family: GoogleSans
+    - family: Google Sans
       fonts:
         - asset: assets/fonts/GoogleSans-Regular.ttf
           weight: 400
@@ -104,7 +84,7 @@ flutter:
           weight: 500
         - asset: assets/fonts/GoogleSans-Bold.ttf
           weight: 700
-    - family: Google Sans
+    - family: GoogleSans
       fonts:
         - asset: assets/fonts/GoogleSans-Regular.ttf
           weight: 400

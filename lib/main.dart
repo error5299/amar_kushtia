@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'features/splash/splash_screen.dart';
 import 'localization/app_localizations.dart';
 import 'services/firebase_service.dart';
@@ -9,9 +8,6 @@ import 'theme/app_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Enable font runtime fetching with offline bundle fallback
-  GoogleFonts.config.allowRuntimeFetching = true;
 
   // Initialize Firebase core services
   try {

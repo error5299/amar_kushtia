@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
 /// AppTypography establishes the strict typographical hierarchy for "আমার কুষ্টিয়া".
-/// Uses 'Hind Siliguri' (bundled locally in assets/fonts) as the primary font family
+/// Uses 'Google Sans' (bundled locally in assets/fonts) as the primary font family
 /// for crisp, instant, zero-latency Bengali and English rendering.
 class AppTypography {
   AppTypography._();
 
-  static const String primaryFont = 'Hind Siliguri';
-  static const String displayFont = 'Hind Siliguri';
-  static const List<String> fontFallbacks = ['Hind Siliguri', 'Roboto', 'sans-serif'];
+  static const String primaryFont = 'Google Sans';
+  static const String displayFont = 'Google Sans';
+  static const List<String> fontFallbacks = ['Google Sans', 'GoogleSans', 'sans-serif'];
 
   // Display / Hero Headings (Used in Brand Header, Hero Banners)
   static const TextStyle displayLarge = TextStyle(
