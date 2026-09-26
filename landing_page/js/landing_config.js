@@ -9,17 +9,19 @@ const LANDING_CONFIG = {
   
   // হিরো সেকশন ও ডাউনলোড তথ্য
   hero: {
-    badge: "কুষ্টিয়াবাসীর অল-ইন-ওয়ান আধুনিক ডিজিটাল অ্যাপ",
+    badge: "কুষ্টিয়াবাসীর অল-ইন-ওয়ান আধুনিক ডিজিটাল সহকারী • বেটা ১.০ লাইভ!",
     titleLine1: "কুষ্টিয়া জেলার সকল সেবা ও তথ্য —",
     titleHighlight: "এখন আপনার হাতের মুঠোয়!",
     subtitle: "পশ্চিমাঞ্চল রেলওয়ের নতুন সময়সূচি (টাইম টেবিল নং-৫৪) ও লাইভ ট্র্যাকিং, বিশেষজ্ঞ ডাক্তার ও হাসপাতাল, জরুরি রক্তদাতা, পর্যটন ও দর্শনীয় স্থান এবং ৬টি উপজেলার জরুরি সেবা — সম্পূর্ণ বিজ্ঞাপনমুক্ত এক ক্লিকে।",
-    appVersion: "v1.0.4",
-    appSize: "১৮ MB",
-    rating: "৪.৯ রেটিং",
-    totalDownloads: "১০,০০০+ ডাউনলোড",
-    apkDownloadUrl: "assets/amar_kushtia.apk",
+    appVersion: "v1.0.0-beta.1",
+    releaseChannel: "beta",
+    betaBadgeActive: true,
+    appSize: "৩২ MB",
+    rating: "৫.০ রেটিং",
+    totalDownloads: "৫,০০০+ ডাউনলোড",
+    apkDownloadUrl: "https://github.com/error5299/amar_kushtia/releases/download/v1.0.0-beta.1/app-release.apk",
     playStoreUrl: "https://play.google.com/store/apps",
-    qrCodeData: "https://amarkushtia.app"
+    qrCodeData: "https://github.com/error5299/amar_kushtia/releases/latest"
   },
 
   // পরিসংখ্যান (Stats Counter)

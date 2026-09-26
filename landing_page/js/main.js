@@ -60,18 +60,28 @@ function syncConfigToUI(config) {
   }
 
   // 3. Update I18N Data with dynamic version & size so translations retain config
+  const isBeta = hero.releaseChannel === 'beta' || (version && version.toLowerCase().includes('beta'));
+  const versionDisplayBn = isBeta ? `বেটা ১.০ (${version})` : version;
+  const versionDisplayEn = isBeta ? `Beta 1.0 (${version})` : version;
+
+  // Update hero trust badge if beta is active
+  const heroBadgeEl = document.querySelector('[data-i18n="hero_badge"]');
+  if (heroBadgeEl && hero.betaBadgeActive !== false && isBeta) {
+    heroBadgeEl.textContent = 'কুষ্টিয়াবাসীর অল-ইন-ওয়ান আধুনিক ডিজিটাল প্ল্যাটফর্ম • বেটা ১.০ লাইভ!';
+  }
+
   if (typeof I18N_DATA !== 'undefined') {
     if (I18N_DATA.bn) {
-      I18N_DATA.bn.hero_apk_title = `APK ডাউনলোড (${version})`;
-      I18N_DATA.bn.cta_apk = `সরাসরি APK ডাউনলোড (${version})`;
-      I18N_DATA.bn.modal_apk = `সরাসরি APK ডাউনলোড (${version} • ${size})`;
+      I18N_DATA.bn.hero_apk_title = `APK ডাউনলোড (${versionDisplayBn})`;
+      I18N_DATA.bn.cta_apk = `সরাসরি APK ডাউনলোড (${versionDisplayBn})`;
+      I18N_DATA.bn.modal_apk = `সরাসরি APK ডাউনলোড (${versionDisplayBn} • ${size})`;
       if (hero.rating) I18N_DATA.bn.hero_rating = hero.rating;
       if (hero.appSize) I18N_DATA.bn.hero_size = `নিরাপদ ও হালকা (${hero.appSize})`;
     }
     if (I18N_DATA.en) {
-      I18N_DATA.en.hero_apk_title = `Download APK (${version})`;
-      I18N_DATA.en.cta_apk = `Direct APK Download (${version})`;
-      I18N_DATA.en.modal_apk = `Direct APK Download (${version} • ${size})`;
+      I18N_DATA.en.hero_apk_title = `Download APK (${versionDisplayEn})`;
+      I18N_DATA.en.cta_apk = `Direct APK Download (${versionDisplayEn})`;
+      I18N_DATA.en.modal_apk = `Direct APK Download (${versionDisplayEn} • ${size})`;
       if (hero.rating) I18N_DATA.en.hero_rating = hero.rating;
       if (hero.appSize) I18N_DATA.en.hero_size = `Safe & Light (${hero.appSize})`;
     }
