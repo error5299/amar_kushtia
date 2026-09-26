@@ -55,12 +55,8 @@ android {
             } else {
                 signingConfig = signingConfigs.getByName("debug")
             }
-        }
-    }
-
-    packaging {
-        jniLibs {
-            keepDebugSymbols.add("**/*.so")
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
     }
 }
