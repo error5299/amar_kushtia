@@ -10,8 +10,8 @@ import 'theme/app_theme.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Disable online font downloads: rely 100% on locally bundled zero-latency font assets
-  GoogleFonts.config.allowRuntimeFetching = false;
+  // Enable font runtime fetching with offline bundle fallback
+  GoogleFonts.config.allowRuntimeFetching = true;
 
   // Initialize Firebase core services
   try {
